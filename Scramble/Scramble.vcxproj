@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\getExePath.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Playfield.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BloomFramework\BloomFramework\BloomFramework.vcxproj">
@@ -28,6 +30,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Components\EnemyComponent.h" />
+    <ClInclude Include="include\Components\PlayerComponent.h" />
+    <ClInclude Include="include\Components\Vector2D.h" />
+    <ClInclude Include="include\Entities\Enemies\Enemy.h" />
+    <ClInclude Include="include\Entities\Player.h" />
+    <ClInclude Include="include\getExePath.h" />
+    <ClInclude Include="include\Playfield.h" />
+    <ClInclude Include="include\StaticVariables.h" />
+    <ClInclude Include="include\Systems\PlayerMovement.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -126,6 +139,12 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>(robocopy "$(ProjectDir)data\\" "$(OutDir)data\\" /S /NDL /NJH /NJS /nc /ns /np) &amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copying required data to output directory.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -144,6 +163,12 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>(robocopy "$(ProjectDir)data\\" "$(OutDir)data\\" /S /NDL /NJH /NJS /nc /ns /np) &amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copying required data to output directory.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -166,6 +191,12 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>(robocopy "$(ProjectDir)data\\" "$(OutDir)data\\" /S /NDL /NJH /NJS /nc /ns /np) &amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copying required data to output directory.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -188,6 +219,12 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>(robocopy "$(ProjectDir)data\\" "$(OutDir)data\\" /S /NDL /NJH /NJS /nc /ns /np) &amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copying required data to output directory.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,11 +1,12 @@
 #include "Framework.h"
 #include "entt/entt.hpp"
+#include "Playfield.h"
 using namespace bloom;
 
 Game* game = nullptr;
 
 int main(int argc, char* argv[]) {
-	game = new Game({ 800, 600 }, { 0, 0 | SDL_RENDERER_TARGETTEXTURE });
+	game = new Game({ 800, 600 }, { 0, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE });
 	try {
 		game->create("Scramble!!", { SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED });
 	}
@@ -24,6 +25,15 @@ int main(int argc, char* argv[]) {
 	game->clear();
 	game->render();
 
-	system("pause");
+	Playfield playfield(game);
+
+	while (game->isRunning()) {
+		game->clear();
+		game->handleEvents();
+		playfield.handleInput();
+		playfield.update();
+		playfield.draw();
+		game->render();
+	}
 	return 0;
 }
