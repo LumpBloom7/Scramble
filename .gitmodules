@@ -1,0 +1,3 @@
+[submodule "BloomFramework"]
+	path = BloomFramework
+	url = https://github.com/BloomCreativeWorks/BloomFramework.git
