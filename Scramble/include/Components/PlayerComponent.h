@@ -15,6 +15,6 @@ struct PlayerComponent {
 	// Focus mode
 	bool focused = false;
 
-	double speed = 300.0;
+	double speed = 600.0;
 	std::bitset<10> perks;
 };
