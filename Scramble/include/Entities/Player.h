@@ -4,6 +4,7 @@
 #include "StaticVariables.h"
 #include "Components/PlayerComponent.h"
 #include "Components/Vector2D.h"
+#include "Components/Positionf.h"
 class PlayerObject : bloom::GameObject {
 public:
 	PlayerObject(entt::registry& registry, bloom::Game*& gameInstance) : GameObject::GameObject(registry, gameInstance) {
@@ -11,6 +12,7 @@ public:
 		m_registry.replace<bloom::components::Size>(m_entity, 50, 50);
 		m_registry.assign<PlayerComponent>(m_entity);
 		m_registry.assign<Vector2D>(m_entity);
+		m_registry.assign<Positionf>(m_entity);
 	}
 
 	virtual void init() {
