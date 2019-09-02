@@ -65,10 +65,10 @@
     <ClInclude Include="include\Components\Hitbox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Systems\RandomMovement.h">
+    <ClInclude Include="include\Systems\CollisionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Systems\CollisionSystem.h">
+    <ClInclude Include="include\Systems\EnemyMovement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

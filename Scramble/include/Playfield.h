@@ -4,7 +4,7 @@
 #include "Systems/Systems.h"
 #include "Systems/PlayerMovement.h"
 #include "Systems/PositionNormalizer.h"
-#include "Systems/RandomMovement.h"
+#include "Systems/EnemyMovement.h"
 #include "Systems/CollisionSystem.h"
 #include "Entities/Player.h"
 #include "Entities/Enemies/Enemy.h"
@@ -25,7 +25,7 @@ private:
 	bloom::systems::RenderSystem renderSystem = bloom::systems::RenderSystem(m_registry);
 	MovementHandler movementSystem = MovementHandler(m_registry);
 	PositionNormalizer normalizerSystem = PositionNormalizer(m_registry);
-	RandomMovement randomMovementSystem = RandomMovement(m_registry);
+	EnemyMovement enemyMovementSystem = EnemyMovement(m_registry);
 	CollisionSystem collisionSystem = CollisionSystem(m_registry);
 	PlayerObject player = PlayerObject(m_registry, m_gameInstance);
 	Enemy enemy = Enemy(m_registry, m_gameInstance);

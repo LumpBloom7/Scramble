@@ -45,7 +45,7 @@
     <ClInclude Include="include\Systems\CollisionSystem.h" />
     <ClInclude Include="include\Systems\PlayerMovement.h" />
     <ClInclude Include="include\Systems\PositionNormalizer.h" />
-    <ClInclude Include="include\Systems\RandomMovement.h" />
+    <ClInclude Include="include\Systems\EnemyMovement.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

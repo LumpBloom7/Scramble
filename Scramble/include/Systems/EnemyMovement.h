@@ -2,22 +2,21 @@
 #include "Systems/DefaultSystem.h"
 #include "Components/Vector2D.h"
 #include "Components/EnemyComponent.h"
+#include "Components/PlayerComponent.h"
 
 
-class RandomMovement : public bloom::systems::System {
+class EnemyMovement : public bloom::systems::System {
 public:
 	using bloom::systems::System::DefaultSystem;
 
 	void update(double deltaTime = 0.0) {
 		srand(static_cast<uint32_t>(time(nullptr)));
-		m_registry.group<>(entt::get<Vector2D, EnemyComponent>).each(
-			[](auto& vector, auto& enemyComp) {
-				int randX = (rand() % 10), randY = (rand() % 10);
-				vector.x += randX;
-				vector.y += randY;
+		auto players = m_registry.group<>(entt::get<Positionf, PlayerComponent>);
+		m_registry.group<>(entt::get<Vector2D, EnemyComponent, Positionf>).each(
+			[&](auto& vector, auto& enemyComp, auto& positionf) {
 
-				vector.x = (randX % 2 == 0 ? vector.x * -1 : vector.x);
-				vector.y = (randY % 2 == 0 ? vector.y * -1 : vector.y);
+				vector.x += players.get<Positionf>(players[0]).x - positionf.x;
+				vector.y += players.get<Positionf>(players[0]).y - positionf.y;
 
 				double length = std::sqrt((vector.x * vector.x) + (vector.y * vector.y));
 				if (length != 0.0) {
