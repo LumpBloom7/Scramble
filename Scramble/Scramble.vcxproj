@@ -33,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Components\EnemyComponent.h" />
+    <ClInclude Include="include\Components\Hitbox.h" />
     <ClInclude Include="include\Components\PlayerComponent.h" />
     <ClInclude Include="include\Components\Positionf.h" />
     <ClInclude Include="include\Components\Vector2D.h" />
@@ -43,6 +44,7 @@
     <ClInclude Include="include\StaticVariables.h" />
     <ClInclude Include="include\Systems\PlayerMovement.h" />
     <ClInclude Include="include\Systems\PositionNormalizer.h" />
+    <ClInclude Include="include\Systems\RandomMovement.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -62,5 +62,11 @@
     <ClInclude Include="include\Systems\PositionNormalizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Components\Hitbox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Systems\RandomMovement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
