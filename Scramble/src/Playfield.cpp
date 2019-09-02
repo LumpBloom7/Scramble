@@ -6,8 +6,8 @@ void Playfield::handleInput() {
 
 	using bloom::input::KeyboardKey;
 	auto input = m_gameInstance->input;
-	m_registry.group<>(entt::get<PlayerComponent, Vector2D, bloom::components::Size>).each(
-		[input](PlayerComponent& playerComp, Vector2D& vector, bloom::components::Size& size) {
+	m_registry.group<>(entt::get<PlayerComponent, Vector2D, bloom::components::Size, Hitbox, Positionf>).each(
+		[input](PlayerComponent& playerComp, Vector2D& vector, bloom::components::Size& size, Hitbox& hitbox, Positionf& position) {
 			if (input.keyboard.isPressed(KeyboardKey::KEY_UP))
 				vector.y -= 1;
 			if (input.keyboard.isPressed(KeyboardKey::KEY_DOWN))
@@ -29,11 +29,21 @@ void Playfield::handleInput() {
 			vector.x *= playerComp.speed;
 			vector.y *= playerComp.speed;
 			if (playerComp.focused) { 
+				if (!playerComp.wasFocused) {
+					position.x += (size.w - hitbox.w) / 2;
+					position.y += (size.h - hitbox.h) / 2;
+					playerComp.wasFocused = true;
+				}
 				vector.x /= 2, vector.y /= 2;
 				size = Size(25, 25);
 			}
 			else {
 				size = Size(50, 50);
+				if (playerComp.wasFocused) {
+					position.x -= (size.w - hitbox.w) / 2;
+					position.y -= (size.h - hitbox.h) / 2;
+					playerComp.wasFocused = false;
+				}
 			}
 		}
 	);
