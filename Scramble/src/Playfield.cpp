@@ -52,7 +52,7 @@ void Playfield::handleInput() {
 }
 
 void Playfield::update(double deltaTime) {
-	//randomMovementSystem.update(deltaTime);
+	randomMovementSystem.update(deltaTime);
 	movementSystem.update(deltaTime);
 	normalizerSystem.update();
 	collisionSystem.update();
