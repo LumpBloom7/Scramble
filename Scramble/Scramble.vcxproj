@@ -42,6 +42,7 @@
     <ClInclude Include="include\getExePath.h" />
     <ClInclude Include="include\Playfield.h" />
     <ClInclude Include="include\StaticVariables.h" />
+    <ClInclude Include="include\Systems\CollisionSystem.h" />
     <ClInclude Include="include\Systems\PlayerMovement.h" />
     <ClInclude Include="include\Systems\PositionNormalizer.h" />
     <ClInclude Include="include\Systems\RandomMovement.h" />

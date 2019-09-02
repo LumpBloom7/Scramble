@@ -68,5 +68,8 @@
     <ClInclude Include="include\Systems\RandomMovement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Systems\CollisionSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
