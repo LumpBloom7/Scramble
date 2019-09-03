@@ -17,5 +17,6 @@ struct PlayerComponent {
 	bool wasFocused = false;
 
 	double speed = 600.0;
+	double playerVelocity;
 	std::bitset<10> perks;
 };

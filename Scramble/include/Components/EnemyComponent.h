@@ -5,5 +5,9 @@ struct EnemyComponent {
 
 	int aggressiveness;
 
-	double speed = 300.0;
+	double maxSpeed = 500.0;
+	double velocity = 0.0;
+	double acceleration = 500.0;
+	double decceleration = 60.0;
+
 };

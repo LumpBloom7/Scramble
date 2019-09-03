@@ -8,6 +8,7 @@ void Playfield::handleInput() {
 	auto input = m_gameInstance->input;
 	m_registry.group<>(entt::get<PlayerComponent, Vector2D, bloom::components::Size, Hitbox, Positionf>).each(
 		[input](PlayerComponent& playerComp, Vector2D& vector, bloom::components::Size& size, Hitbox& hitbox, Positionf& position) {
+			vector = Vector2D();
 			if (input.keyboard.isPressed(KeyboardKey::KEY_UP))
 				vector.y -= 1;
 			if (input.keyboard.isPressed(KeyboardKey::KEY_DOWN))
