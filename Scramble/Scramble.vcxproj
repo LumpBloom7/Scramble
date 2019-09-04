@@ -38,6 +38,7 @@
     <ClInclude Include="include\Components\Positionf.h" />
     <ClInclude Include="include\Components\Vector2D.h" />
     <ClInclude Include="include\Entities\Enemies\Enemy.h" />
+    <ClInclude Include="include\Entities\Enemies\Kamikaze.h" />
     <ClInclude Include="include\Entities\Player.h" />
     <ClInclude Include="include\getExePath.h" />
     <ClInclude Include="include\Playfield.h" />

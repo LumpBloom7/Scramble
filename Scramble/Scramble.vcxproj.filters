@@ -71,5 +71,8 @@
     <ClInclude Include="include\Systems\EnemyMovement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Entities\Enemies\Kamikaze.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

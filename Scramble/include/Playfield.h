@@ -8,6 +8,7 @@
 #include "Systems/CollisionSystem.h"
 #include "Entities/Player.h"
 #include "Entities/Enemies/Enemy.h"
+#include "Entities/Enemies/Kamikaze.h"
 
 class Playfield {
 public:
@@ -29,4 +30,5 @@ private:
 	CollisionSystem collisionSystem = CollisionSystem(m_registry);
 	PlayerObject player = PlayerObject(m_registry, m_gameInstance);
 	Enemy enemy = Enemy(m_registry, m_gameInstance);
+	Kamikaze kamikaze = Kamikaze(m_registry, m_gameInstance);
 };
