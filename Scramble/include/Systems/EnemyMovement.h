@@ -11,11 +11,11 @@ public:
 
 	void update(double deltaTime = 0.0) {
 		srand(static_cast<uint32_t>(time(nullptr)));
-		auto players = m_registry.group<>(entt::get<Positionf, PlayerComponent>);
+		auto players = m_registry.group<>(entt::get<Positionf, PlayerComponent, bloom::components::Size>);
 		m_registry.group<>(entt::get<Vector2D, EnemyComponent, Positionf, bloom::components::Size>).each(
 			[&](auto& vector, auto& enemyComp, auto& positionf, auto& size) {
-				double xThrust = players.get<Positionf>(players[0]).x - positionf.x;
-				double yThrust = players.get<Positionf>(players[0]).y - positionf.y;
+				double xThrust = players.get<Positionf>(players[0]).x + players.get<bloom::components::Size>(players[0]).w/2 - (positionf.x + size.w/2);
+				double yThrust = players.get<Positionf>(players[0]).y + players.get<bloom::components::Size>(players[0]).h/2 - (positionf.y + size.h/2);
 
 				double length = std::sqrt((xThrust * xThrust) + (yThrust * yThrust));
 				if (length != 0.0) {
