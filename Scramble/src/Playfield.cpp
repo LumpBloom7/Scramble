@@ -55,8 +55,9 @@ void Playfield::handleInput() {
 void Playfield::update(double deltaTime) {
 	enemyMovementSystem.update(deltaTime);
 	movementSystem.update(deltaTime);
+	collisionSystem.update(deltaTime);
 	normalizerSystem.update();
-	collisionSystem.update();
+	
 }
 
 void Playfield::draw() {
