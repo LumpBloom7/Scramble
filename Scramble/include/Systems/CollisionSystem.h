@@ -43,7 +43,7 @@ public:
 								hitboxBounds.end.y > hitboxBounds2.start.y) yCollide = true;
 
 							if (xCollide && yCollide) {
-								std::cout << "[" << hitbox.name << "] collided with [" << hitbox2.name << "]." << std::endl;
+								std::cout << "[" << hitbox.name << "]("<< entity << ") collided with [" << hitbox2.name << "](" << entity2 << ")." << std::endl;
 								if (xCollide) {
 									position.x -= vector.x * (deltaTime / 1000);
 								}
