@@ -6,8 +6,8 @@ void Playfield::handleInput() {
 
 	using bloom::input::KeyboardKey;
 	auto input = m_gameInstance->input;
-	m_registry.group<>(entt::get<PlayerComponent, Vector2D, bloom::components::Size, Hitbox, Positionf>).each(
-		[input](PlayerComponent& playerComp, Vector2D& vector, bloom::components::Size& size, Hitbox& hitbox, Positionf& position) {
+	m_registry.group<>(entt::get<PlayerComponent, Vector2D, bloom::components::Size, Hitbox, Positionf, bloom::graphics::Sprite>).each(
+		[&](PlayerComponent& playerComp, Vector2D& vector, bloom::components::Size& size, Hitbox& hitbox, Positionf& position, bloom::graphics::Sprite& sprite) {
 			vector = Vector2D();
 			if (input.keyboard.isPressed(KeyboardKey::KEY_UP))
 				vector.y -= 1;
@@ -31,18 +31,20 @@ void Playfield::handleInput() {
 			vector.y *= playerComp.speed;
 			if (playerComp.focused) { 
 				if (!playerComp.wasFocused) {
-					position.x += (size.w - hitbox.w) / 2;
-					position.y += (size.h - hitbox.h) / 2;
+					sprite = bloom::graphics::Sprite(m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "PlayerSpriteFocused.png"));
+					/*position.x += (size.w - hitbox.w) / 2;
+					position.y += (size.h - hitbox.h) / 2;*/
 					playerComp.wasFocused = true;
 				}
 				vector.x /= 2, vector.y /= 2;
-				size = Size(25, 25);
+				//size = Size(25, 25);
 			}
 			else {
-				size = Size(50, 50);
+				//size = Size(50, 50);
 				if (playerComp.wasFocused) {
-					position.x -= (size.w - hitbox.w) / 2;
-					position.y -= (size.h - hitbox.h) / 2;
+					sprite = bloom::graphics::Sprite(m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "PlayerSprite.png"));
+					/*position.x -= (size.w - hitbox.w) / 2;
+					position.y -= (size.h - hitbox.h) / 2;*/
 					playerComp.wasFocused = false;
 				}
 			}
