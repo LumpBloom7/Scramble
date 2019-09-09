@@ -3,7 +3,6 @@
 #include "Components/Vector2D.h"
 using namespace bloom::components;
 void Playfield::handleInput() {
-
 	using bloom::input::KeyboardKey;
 	auto input = m_gameInstance->input;
 	m_registry.group<>(entt::get<PlayerComponent, Vector2D, bloom::components::Size, Hitbox, Positionf, bloom::graphics::Sprite>).each(
@@ -59,11 +58,12 @@ void Playfield::update(double deltaTime) {
 	movementSystem.update(deltaTime);
 	collisionSystem.update(deltaTime);
 	normalizerSystem.update();
-	
 }
 
 void Playfield::draw() {
 	renderSystem.update();
+	auto input = m_gameInstance->input;
+	m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "Crosshair32.png")->render(std::nullopt, {input.mouse.getX()-16, input.mouse.getY()-16,32,32});
 }
 
 

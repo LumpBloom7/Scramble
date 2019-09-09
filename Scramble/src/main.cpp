@@ -26,6 +26,7 @@ int main(int argc, char* argv[]) {
 	game->render();
 
 	Playfield playfield(game);
+	SDL_ShowCursor(SDL_DISABLE);
 	game->timer.restart();
 	while (game->isRunning()) {
 		game->clear();
