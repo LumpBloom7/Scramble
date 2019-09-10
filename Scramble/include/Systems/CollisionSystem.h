@@ -10,6 +10,18 @@ struct Points {
 	Positionf start, end;
 };
 
+struct ColliderInfo {
+	using Position = bloom::components::Position;
+	using Size = bloom::components::Size;
+
+	ColliderInfo(entt::entity e, Hitbox& h, Size& s, Positionf& p, Points hb) : entityID(e), hitbox(h), size(s), position(p), hitboxBounds(hb) {}
+	entt::entity entityID;
+	Hitbox& hitbox;
+	Size& size;
+	Positionf& position;
+	Points hitboxBounds;
+};
+
 class CollisionSystem : public bloom::systems::System {
 public:
 	using bloom::systems::System::DefaultSystem;
@@ -18,6 +30,26 @@ public:
 
 	void update(double deltaTime = 0.0) {
 		timeDifference += deltaTime;
+		std::unordered_map<int, std::unordered_map<int, std::vector<ColliderInfo>>> uniformGrid {};
+
+		m_registry.group<>(entt::get<Hitbox, Size, Positionf>).each(
+			[&](auto& entity, Hitbox& hitbox, Size& size, Positionf& position) {
+				hitbox.intersectedGrids.clear();
+				int xOffset = (size.w - hitbox.w) / 2, yOffset = (size.h - hitbox.h) / 2;
+				Points hitboxBounds{
+					Positionf{ position.x + xOffset,position.y + yOffset },
+					Positionf{ position.x + xOffset + hitbox.w ,position.y + yOffset + hitbox.h }
+				};
+				Grid one{ hitboxBounds.start.x / 20,hitboxBounds.start.y / 20 }, two{ hitboxBounds.end.x / 20,hitboxBounds.end.y / 20 };
+				for (int i = one.x; i <= two.x; ++i)
+					for (int j = one.y; j <= two.y; ++j)
+						if ((i >= 0 && i <= 39) && (j >= 0 && j <= 29)) {
+							ColliderInfo info(entity, hitbox, size, position, hitboxBounds);
+							uniformGrid[i][j].emplace_back(info);
+							hitbox.intersectedGrids.emplace_back(Grid{ i,j });
+						}
+			}
+		);
 		m_registry.group<>(entt::get<Hitbox, Size, Positionf, Vector2D>).each(
 			[&](auto& entity, Hitbox& hitbox, Size& size, Positionf& position, Vector2D& vector) {
 				int xOffset = (size.w - hitbox.w) / 2, yOffset = (size.h - hitbox.h) / 2;
@@ -25,25 +57,20 @@ public:
 					Positionf{ position.x + xOffset,position.y + yOffset },
 					Positionf{ position.x + xOffset + hitbox.w ,position.y + yOffset + hitbox.h }
 				};
-				Positionf hitboxPosition;
-				m_registry.group<>(entt::get<Hitbox, Size, Positionf>).each(
-					[&](auto& entity2, Hitbox& hitbox2, Size& size2, Positionf& position2) {
-						int xOffset2 = (size2.w - hitbox2.w) / 2, yOffset2 = (size2.h - hitbox2.h) / 2;
-						Points hitboxBounds2{
-							Positionf{ position2.x + xOffset2, position2.y + yOffset2 },
-							Positionf{ position2.x + xOffset2 + hitbox2.w ,position2.y + yOffset2 + hitbox2.h }
-						};
-
-						if (entity != entity2) {
+				std::unordered_map<entt::entity, bool> processed{};
+				for (auto& grid : hitbox.intersectedGrids) {
+					for (auto& collider : uniformGrid[grid.x][grid.y]) {
+						if (entity != collider.entityID && !processed[collider.entityID]) {
+							processed[collider.entityID] = true;
 							bool xCollide = false, yCollide = false;
-							if (hitboxBounds.start.x < hitboxBounds2.end.x &&
-								hitboxBounds.end.x > hitboxBounds2.start.x) xCollide = true;
+							if (hitboxBounds.start.x < collider.hitboxBounds.end.x &&
+								hitboxBounds.end.x > collider.hitboxBounds.start.x) xCollide = true;
 
-							if (hitboxBounds.start.y < hitboxBounds2.end.y &&
-								hitboxBounds.end.y > hitboxBounds2.start.y) yCollide = true;
+							if (hitboxBounds.start.y < collider.hitboxBounds.end.y &&
+								hitboxBounds.end.y > collider.hitboxBounds.start.y) yCollide = true;
 
 							if (xCollide && yCollide) {
-								std::cout << "[" << hitbox.name << "]("<< entity << ") collided with [" << hitbox2.name << "](" << entity2 << ")." << std::endl;
+								std::cout << "[" << hitbox.name << "](" << entity << ") collided with [" << collider.hitbox.name << "](" << collider.entityID<< ")." << std::endl;
 								if (xCollide) {
 									position.x -= vector.x * (deltaTime / 1000);
 								}
@@ -56,28 +83,21 @@ public:
 									Positionf{ position.x + xOffset,position.y + yOffset },
 									Positionf{ position.x + xOffset + hitbox.w ,position.y + yOffset + hitbox.h }
 								};
-								hitboxBounds2 = Points{
-									Positionf{ position2.x + xOffset2, position2.y + yOffset2 },
-									Positionf{ position2.x + xOffset2 + hitbox2.w ,position2.y + yOffset2 + hitbox2.h }
-								};
 
-								if (hitboxBounds.start.x < hitboxBounds2.end.x &&
-									hitboxBounds.end.x > hitboxBounds2.start.x) xCollide = true;
+								if (hitboxBounds.start.x < collider.hitboxBounds.end.x &&
+									hitboxBounds.end.x > collider.hitboxBounds.start.x) xCollide = true;
 
-								if (hitboxBounds.start.y < hitboxBounds2.end.y &&
-									hitboxBounds.end.y > hitboxBounds2.start.y) yCollide = true;
+								if (hitboxBounds.start.y < collider.hitboxBounds.end.y &&
+									hitboxBounds.end.y > collider.hitboxBounds.start.y) yCollide = true;
 
 								if (!xCollide && yCollide)
 									position.y += vector.y * (deltaTime / 1000);
-								if (!yCollide && xCollide )
+								if (!yCollide && xCollide)
 									position.x += vector.x * (deltaTime / 1000);
 							}
-
-
-
 						}
 					}
-				);
+				}
 			}
 		);
 	}
