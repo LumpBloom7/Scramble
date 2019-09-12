@@ -32,17 +32,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Components\BulletComponent.h" />
     <ClInclude Include="include\Components\EnemyComponent.h" />
     <ClInclude Include="include\Components\Hitbox.h" />
     <ClInclude Include="include\Components\PlayerComponent.h" />
     <ClInclude Include="include\Components\Positionf.h" />
     <ClInclude Include="include\Components\Vector2D.h" />
+    <ClInclude Include="include\Entities\Bullet.h" />
     <ClInclude Include="include\Entities\Enemies\Enemy.h" />
     <ClInclude Include="include\Entities\Enemies\Kamikaze.h" />
     <ClInclude Include="include\Entities\Player.h" />
     <ClInclude Include="include\getExePath.h" />
     <ClInclude Include="include\Playfield.h" />
     <ClInclude Include="include\StaticVariables.h" />
+    <ClInclude Include="include\Systems\BulletMovement.h" />
     <ClInclude Include="include\Systems\CollisionSystem.h" />
     <ClInclude Include="include\Systems\PlayerMovement.h" />
     <ClInclude Include="include\Systems\PositionNormalizer.h" />
