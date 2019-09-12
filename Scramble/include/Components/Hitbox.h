@@ -1,7 +1,7 @@
 #pragma once
 
 struct Grid {
-	int x = -1, y = -1;
+	int x = 0, y = 0;
 };
 struct Hitbox {
 	enum class Type {

@@ -30,7 +30,7 @@ public:
 
 	void update(double deltaTime = 0.0) {
 		timeDifference += deltaTime;
-		std::unordered_map<int, std::unordered_map<int, std::vector<ColliderInfo>>> uniformGrid {};
+		std::unordered_map<int, std::unordered_map<int, std::vector<ColliderInfo>>> uniformGrid{};
 
 		m_registry.group<>(entt::get<Hitbox, Size, Positionf>).each(
 			[&](auto& entity, Hitbox& hitbox, Size& size, Positionf& position) {
@@ -42,12 +42,11 @@ public:
 				};
 				Grid one{ hitboxBounds.start.x / 20,hitboxBounds.start.y / 20 }, two{ hitboxBounds.end.x / 20,hitboxBounds.end.y / 20 };
 				for (int i = one.x; i <= two.x; ++i)
-					for (int j = one.y; j <= two.y; ++j)
-						if ((i >= 0 && i <= 39) && (j >= 0 && j <= 29)) {
-							ColliderInfo info(entity, hitbox, size, position, hitboxBounds);
-							uniformGrid[i][j].emplace_back(info);
-							hitbox.intersectedGrids.emplace_back(Grid{ i,j });
-						}
+					for (int j = one.y; j <= two.y; ++j) {
+						ColliderInfo info(entity, hitbox, size, position, hitboxBounds);
+						uniformGrid[i][j].emplace_back(info);
+						hitbox.intersectedGrids.emplace_back(Grid{ i,j });
+					}
 			}
 		);
 		m_registry.group<>(entt::get<Hitbox, Size, Positionf, Vector2D>).each(
@@ -70,7 +69,7 @@ public:
 								hitboxBounds.end.y > collider.hitboxBounds.start.y) yCollide = true;
 
 							if (xCollide && yCollide) {
-								std::cout << "[" << hitbox.name << "](" << entity << ") collided with [" << collider.hitbox.name << "](" << collider.entityID<< ")." << std::endl;
+								std::cout << "[" << hitbox.name << "](" << entity << ") collided with [" << collider.hitbox.name << "](" << collider.entityID << ")." << std::endl;
 								if (xCollide) {
 									position.x -= vector.x * (deltaTime / 1000);
 								}
