@@ -2,9 +2,11 @@
 #include "Components/PlayerComponent.h"
 #include "Components/Vector2D.h"
 using namespace bloom::components;
-void Playfield::handleInput() {
+void Playfield::handleInput(double deltaTime) {
+	using bloom::input::MouseButton;
 	using bloom::input::KeyboardKey;
 	auto input = m_gameInstance->input;
+	m_dt -= deltaTime;
 	m_registry.group<>(entt::get<PlayerComponent, Vector2D, bloom::components::Size, Hitbox, Positionf, bloom::graphics::Sprite>).each(
 		[&](PlayerComponent& playerComp, Vector2D& vector, bloom::components::Size& size, Hitbox& hitbox, Positionf& position, bloom::graphics::Sprite& sprite) {
 			vector = Vector2D();
@@ -19,6 +21,13 @@ void Playfield::handleInput() {
 			if (input.keyboard.isPressed(KeyboardKey::KEY_LEFT_SHIFT))
 				playerComp.focused = true;
 			else playerComp.focused = false;
+
+			if (input.mouse.isPressed(MouseButton::MOUSE_LEFT) && m_dt <= 0.0) {
+				Positionf spawn{ position.x + size.w / 2, position.y + size.h / 2 };
+				Positionf target{ input.mouse.getX()- spawn.x, input.mouse.getY()- spawn.y };
+				bullets.emplace_back(m_registry, m_gameInstance).init(spawn, target, Hitbox::Type::friendlyBullet);
+				m_dt = 200.0;
+			}
 
 			double length = std::sqrt((vector.x * vector.x) + (vector.y * vector.y));
 			if (length != 0.0) {
@@ -56,6 +65,7 @@ void Playfield::handleInput() {
 void Playfield::update(double deltaTime) {
 	enemyMovementSystem.update(deltaTime);
 	movementSystem.update(deltaTime);
+	bulletMovementSystem.update(deltaTime);
 	collisionSystem.update(deltaTime);
 	normalizerSystem.update();
 }

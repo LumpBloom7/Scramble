@@ -1,5 +1,5 @@
 #pragma once
-
+#include <deque>
 struct Grid {
 	int x = 0, y = 0;
 };
@@ -15,5 +15,5 @@ struct Hitbox {
 	double w, h;
 	double xOffset, yOffset;
 
-	std::vector<Grid> intersectedGrids{};
+	std::vector<Grid> intersectedGrids;
 };

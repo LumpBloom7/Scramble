@@ -11,12 +11,12 @@ public:
 
 	void update(double deltaTime = 0.0) {
 		srand(static_cast<uint32_t>(time(nullptr)));
-		auto players = m_registry.group<>(entt::get<Positionf, PlayerComponent, bloom::components::Size>);
-		m_registry.group<>(entt::get<Vector2D, EnemyComponent, Positionf, bloom::components::Size>).each(
+		entt::entity players = *m_registry.view<Positionf, PlayerComponent, bloom::components::Size>().begin();
+		m_registry.view<Vector2D, EnemyComponent, Positionf, bloom::components::Size>().each(
 			[&](auto& vector, auto& enemyComp, auto& positionf, auto& size) {
 				if (enemyComp.type == EnemyComponent::EnemyType::kamikaze) {
-					double xThrust = players.get<Positionf>(players[0]).x + players.get<bloom::components::Size>(players[0]).w / 2 - (positionf.x + size.w / 2);
-					double yThrust = players.get<Positionf>(players[0]).y + players.get<bloom::components::Size>(players[0]).h / 2 - (positionf.y + size.h / 2);
+					double xThrust = m_registry.get<Positionf>(players).x + m_registry.get<bloom::components::Size>(players).w / 2 - (positionf.x + size.w / 2);
+					double yThrust = m_registry.get<Positionf>(players).y + m_registry.get<bloom::components::Size>(players).h / 2 - (positionf.y + size.h / 2);
 
 					double length = std::sqrt((xThrust * xThrust) + (yThrust * yThrust));
 					if (length != 0.0) {

@@ -32,7 +32,7 @@ public:
 		timeDifference += deltaTime;
 		std::unordered_map<int, std::unordered_map<int, std::vector<ColliderInfo>>> uniformGrid{};
 
-		m_registry.group<>(entt::get<Hitbox, Size, Positionf>).each(
+		m_registry.view<Hitbox, Size, Positionf>().each(
 			[&](auto& entity, Hitbox& hitbox, Size& size, Positionf& position) {
 				hitbox.intersectedGrids.clear();
 				int xOffset = (size.w - hitbox.w) / 2, yOffset = (size.h - hitbox.h) / 2;
@@ -40,7 +40,7 @@ public:
 					Positionf{ position.x + xOffset,position.y + yOffset },
 					Positionf{ position.x + xOffset + hitbox.w ,position.y + yOffset + hitbox.h }
 				};
-				Grid one{ hitboxBounds.start.x / 20,hitboxBounds.start.y / 20 }, two{ hitboxBounds.end.x / 20,hitboxBounds.end.y / 20 };
+				Grid one{ hitboxBounds.start.x / 8,hitboxBounds.start.y / 8 }, two{ hitboxBounds.end.x / 8,hitboxBounds.end.y / 8 };
 				for (int i = one.x; i <= two.x; ++i)
 					for (int j = one.y; j <= two.y; ++j) {
 						ColliderInfo info(entity, hitbox, size, position, hitboxBounds);
@@ -49,7 +49,7 @@ public:
 					}
 			}
 		);
-		m_registry.group<>(entt::get<Hitbox, Size, Positionf, Vector2D>).each(
+		m_registry.view<Hitbox, Size, Positionf, Vector2D>().each(
 			[&](auto& entity, Hitbox& hitbox, Size& size, Positionf& position, Vector2D& vector) {
 				int xOffset = (size.w - hitbox.w) / 2, yOffset = (size.h - hitbox.h) / 2;
 				Points hitboxBounds{
@@ -59,7 +59,7 @@ public:
 				std::unordered_map<entt::entity, bool> processed{};
 				for (auto& grid : hitbox.intersectedGrids) {
 					for (auto& collider : uniformGrid[grid.x][grid.y]) {
-						if (entity != collider.entityID && !processed[collider.entityID]) {
+						if (entity != collider.entityID && !processed[collider.entityID]&& (collider.hitbox.type!=Hitbox::Type::friendlyBullet && hitbox.type != Hitbox::Type::friendlyBullet)) {
 							processed[collider.entityID] = true;
 							bool xCollide = false, yCollide = false;
 							if (hitboxBounds.start.x < collider.hitboxBounds.end.x &&

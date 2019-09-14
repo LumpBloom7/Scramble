@@ -20,6 +20,9 @@ struct Bullet : public bloom::GameObject {
 	}
 	void init(Positionf position, Positionf target, Hitbox::Type type) {
 		m_registry.assign<Hitbox>(m_entity) = Hitbox{ Hitbox::Type::friendlyBullet,"Bullet", 8,8 };
+		position.x -= 4, position.y -= 4;
+		target.x = target.x + (target.x < 0 ? 4 : -4);
+		target.y = target.y + (target.y < 0 ? 4 : -4);
 		m_registry.assign<Positionf>(m_entity, position);
 
 		double length = std::sqrt((target.x * target.x) + (target.y * target.y));
@@ -27,6 +30,6 @@ struct Bullet : public bloom::GameObject {
 			target.x /= length;
 			target.y /= length;
 		}
-		m_registry.assign<Vector2D>(m_entity, Vector2D{target.x, target.y});
+		m_registry.assign<Vector2D>(m_entity, Vector2D{ target.x, target.y });
 	}
 };
