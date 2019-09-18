@@ -22,13 +22,6 @@ void Playfield::handleInput(double deltaTime) {
 				playerComp.focused = true;
 			else playerComp.focused = false;
 
-			if (input.mouse.isPressed(MouseButton::MOUSE_LEFT) && m_dt <= 0.0) {
-				Positionf spawn{ position.x + size.w / 2, position.y + size.h / 2 };
-				Positionf target{ input.mouse.getX()- spawn.x, input.mouse.getY()- spawn.y };
-				bullets.emplace_back(m_registry, m_gameInstance).init(spawn, target, Hitbox::Type::friendlyBullet);
-				m_dt = 200.0;
-			}
-
 			double length = std::sqrt((vector.x * vector.x) + (vector.y * vector.y));
 			if (length != 0.0) {
 				vector.x /= length;
@@ -55,6 +48,13 @@ void Playfield::handleInput(double deltaTime) {
 					position.y -= (size.h - hitbox.h) / 2;*/
 					playerComp.wasFocused = false;
 				}
+			}
+
+			if (input.mouse.isPressed(MouseButton::MOUSE_LEFT) && m_dt <= 0.0) {
+				Positionf spawn{ position.x + size.w / 2, position.y + size.h / 2 };
+				Positionf target{ input.mouse.getX() - spawn.x, input.mouse.getY() - spawn.y };
+				bullets.emplace_back(m_registry, m_gameInstance).init(spawn, target, Hitbox::Type::friendlyBullet);
+				m_dt = 200.0;
 			}
 		}
 	);
