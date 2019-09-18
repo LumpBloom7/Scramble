@@ -33,19 +33,13 @@ void Playfield::handleInput(double deltaTime) {
 			if (playerComp.focused) { 
 				if (!playerComp.wasFocused) {
 					sprite = bloom::graphics::Sprite(m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "PlayerSpriteFocused.png"));
-					/*position.x += (size.w - hitbox.w) / 2;
-					position.y += (size.h - hitbox.h) / 2;*/
 					playerComp.wasFocused = true;
 				}
 				vector.x /= 2, vector.y /= 2;
-				//size = Size(25, 25);
 			}
 			else {
-				//size = Size(50, 50);
 				if (playerComp.wasFocused) {
 					sprite = bloom::graphics::Sprite(m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "PlayerSprite.png"));
-					/*position.x -= (size.w - hitbox.w) / 2;
-					position.y -= (size.h - hitbox.h) / 2;*/
 					playerComp.wasFocused = false;
 				}
 			}
