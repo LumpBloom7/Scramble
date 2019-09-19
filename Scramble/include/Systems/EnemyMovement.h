@@ -10,7 +10,6 @@ public:
 	using bloom::systems::System::DefaultSystem;
 
 	void update(double deltaTime = 0.0) {
-		srand(static_cast<uint32_t>(time(nullptr)));
 		entt::entity players = *m_registry.view<Positionf, PlayerComponent, bloom::components::Size>().begin();
 		m_registry.view<Vector2D, EnemyComponent, Positionf, bloom::components::Size>().each(
 			[&](auto& vector, auto& enemyComp, auto& positionf, auto& size) {

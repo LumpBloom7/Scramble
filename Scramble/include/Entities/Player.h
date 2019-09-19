@@ -14,12 +14,10 @@ public:
 		m_registry.assign<PlayerComponent>(m_entity);
 		m_registry.assign<Vector2D>(m_entity);
 		m_registry.assign<Positionf>(m_entity);
-		m_registry.assign<Hitbox>(m_entity) = Hitbox{ Hitbox::Type::friendly, "Player", 10,10 };
+		m_registry.assign<Hitbox>(m_entity) = Hitbox{ Hitbox::Type::friendly, "Player", 10, 10 };
 	}
 
-	virtual void init() {
-
-	}
+	virtual void init() { }
 
 private:
 

@@ -12,7 +12,7 @@ public:
 	void update(double deltaTime = 0.0) {
 		int w = 800, h = 600;
 		m_registry.view<Vector2D, Positionf, bloom::components::Size, PlayerComponent>().each(
-			[&](Vector2D& vector, Positionf& position, bloom::components::Size& size, PlayerComponent&) {
+			[deltaTime](Vector2D& vector, Positionf& position, bloom::components::Size& size, PlayerComponent&) {
 				position.x += vector.x * (deltaTime / 1000.0);
 				position.y += vector.y * (deltaTime / 1000.0);
 				if (position.x < 0) position.x = 0.0;

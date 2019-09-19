@@ -15,11 +15,9 @@ struct Bullet : public bloom::GameObject {
 		m_registry.replace<bloom::components::Size>(m_entity, 8, 8);
 		m_registry.assign<BulletComponent>(m_entity);
 	}
-	void init() {
-
-	}
+	void init() { }
 	void init(Positionf position, Positionf target, Hitbox::Type type) {
-		m_registry.assign<Hitbox>(m_entity) = Hitbox{ Hitbox::Type::friendlyBullet,"Bullet", 8,8 };
+		m_registry.assign<Hitbox>(m_entity) = Hitbox{ Hitbox::Type::friendlyBullet,"Bullet", 8, 8 };
 		position.x -= 4, position.y -= 4;
 		target.x = target.x + (target.x < 0 ? 4 : -4);
 		target.y = target.y + (target.y < 0 ? 4 : -4);

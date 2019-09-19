@@ -14,9 +14,9 @@ public:
 		m_registry.assign<bloom::components::Sprite>(m_entity, c_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "Kamikaze.png"));
 		m_registry.replace<bloom::components::Size>(m_entity, 50, 50);
 		m_registry.assign<Vector2D>(m_entity);
-		m_registry.assign<Positionf>(m_entity) = Positionf{ 750,550 };
-		m_registry.assign<Hitbox>(m_entity) = Hitbox{ Hitbox::Type::enemy,"Enemy", 50,50 };
-		m_registry.assign<EnemyComponent>(m_entity) = EnemyComponent{ EnemyComponent::EnemyType::kamikaze, 100, 100, 500.0,500.0,400.0 };
+		m_registry.assign<Positionf>(m_entity) = Positionf{ 750, 550 };
+		m_registry.assign<Hitbox>(m_entity) = Hitbox{ Hitbox::Type::enemy,"Enemy", 50, 50 };
+		m_registry.assign<EnemyComponent>(m_entity) = EnemyComponent{ EnemyComponent::EnemyType::kamikaze, 100, 100, 500.0, 500.0, 400.0 };
 	}
 
 	void init() {}

@@ -40,7 +40,7 @@ public:
 					Positionf{ position.x + xOffset,position.y + yOffset },
 					Positionf{ position.x + xOffset + hitbox.w ,position.y + yOffset + hitbox.h }
 				};
-				Grid one{ static_cast<int>(hitboxBounds.start.x / 8),static_cast<int>(hitboxBounds.start.y / 8) }, two{ static_cast<int>(hitboxBounds.end.x / 8),static_cast<int>(hitboxBounds.end.y / 8) };
+				Grid one{ static_cast<int>(hitboxBounds.start.x / 8), static_cast<int>(hitboxBounds.start.y / 8) }, two{ static_cast<int>(hitboxBounds.end.x / 8), static_cast<int>(hitboxBounds.end.y / 8) };
 				for (int i = one.x; i <= two.x; ++i)
 					for (int j = one.y; j <= two.y; ++j) {
 						ColliderInfo info(entity, hitbox, size, position, hitboxBounds);
@@ -59,7 +59,7 @@ public:
 				std::unordered_map<entt::entity, bool> processed{};
 				for (auto& grid : hitbox.intersectedGrids) {
 					for (auto& collider : uniformGrid[grid.x][grid.y]) {
-						if (entity != collider.entityID && !processed[collider.entityID]&& (collider.hitbox.type!=Hitbox::Type::friendlyBullet && hitbox.type != Hitbox::Type::friendlyBullet)) {
+						if (entity != collider.entityID && !processed[collider.entityID] && (collider.hitbox.type != Hitbox::Type::friendlyBullet && hitbox.type != Hitbox::Type::friendlyBullet)) {
 							processed[collider.entityID] = true;
 							bool xCollide = false, yCollide = false;
 							if (hitboxBounds.start.x < collider.hitboxBounds.end.x &&

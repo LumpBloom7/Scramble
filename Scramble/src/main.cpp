@@ -29,13 +29,13 @@ int main(int argc, char* argv[]) {
 	SDL_ShowCursor(SDL_DISABLE);
 	game->timer.restart();
 	while (game->isRunning()) {
-			double dt = game->timer.lap();
-			game->clear();
-			game->handleEvents();
-			playfield.handleInput(dt);
-			playfield.update(dt);
-			playfield.draw();
-			game->render();
+		double dt = game->timer.lap();
+		game->clear();
+		game->handleEvents();
+		playfield.handleInput(dt);
+		playfield.update(dt);
+		playfield.draw();
+		game->render();
 	}
 	return 0;
 }

@@ -13,5 +13,4 @@ struct EnemyComponent {
 	double maxSpeed = 0;
 	double acceleration = 0;
 	double decceleration = 0;
-
 };

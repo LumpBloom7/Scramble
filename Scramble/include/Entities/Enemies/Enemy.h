@@ -16,7 +16,7 @@ public:
 		m_registry.assign<Vector2D>(m_entity);
 		m_registry.assign<Positionf>(m_entity) = Positionf{ 375, 275 };
 		m_registry.assign<Hitbox>(m_entity) = Hitbox{ Hitbox::Type::enemy,"Enemy", 50,50 };
-		m_registry.assign<EnemyComponent>(m_entity) = EnemyComponent{EnemyComponent::EnemyType::solid};
+		m_registry.assign<EnemyComponent>(m_entity) = EnemyComponent{ EnemyComponent::EnemyType::solid };
 	}
 
 	void init() {}

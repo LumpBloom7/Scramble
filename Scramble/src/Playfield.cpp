@@ -30,7 +30,7 @@ void Playfield::handleInput(double deltaTime) {
 
 			vector.x *= playerComp.speed;
 			vector.y *= playerComp.speed;
-			if (playerComp.focused) { 
+			if (playerComp.focused) {
 				if (!playerComp.wasFocused) {
 					sprite = bloom::graphics::Sprite(m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "PlayerSpriteFocused.png"));
 					playerComp.wasFocused = true;
@@ -52,8 +52,6 @@ void Playfield::handleInput(double deltaTime) {
 			}
 		}
 	);
-
-	// Handle various input
 }
 
 void Playfield::update(double deltaTime) {
@@ -67,7 +65,7 @@ void Playfield::update(double deltaTime) {
 void Playfield::draw() {
 	renderSystem.update();
 	auto input = m_gameInstance->input;
-	m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "Crosshair32.png")->render(std::nullopt, {input.mouse.getX()-16, input.mouse.getY()-16,32,32});
+	m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "Crosshair32.png")->render(std::nullopt, { input.mouse.getX() - 16, input.mouse.getY() - 16, 32, 32 });
 }
 
 

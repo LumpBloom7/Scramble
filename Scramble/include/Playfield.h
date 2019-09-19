@@ -15,9 +15,7 @@
 
 class Playfield {
 public:
-	Playfield(bloom::Game*& gameInstance) : m_gameInstance(gameInstance) {
-		m_registry.reserve(1000000);
-	}
+	Playfield(bloom::Game*& gameInstance) : m_gameInstance(gameInstance) {}
 	void handleInput(double deltaTime = 0.0);
 	void update(double deltaTime = 0.0);
 	void draw();

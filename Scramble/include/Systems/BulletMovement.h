@@ -11,7 +11,7 @@ public:
 
 	void update(double deltaTime = 0.0) {
 		m_registry.view<Vector2D, Positionf, BulletComponent>().each(
-			[&](Vector2D& vector, Positionf& position, BulletComponent& bullet) {
+			[deltaTime](Vector2D& vector, Positionf& position, BulletComponent& bullet) {
 				position.x += vector.x * bullet.speed * (deltaTime / 1000.0);
 				position.y += vector.y * bullet.speed * (deltaTime / 1000.0);
 			}
