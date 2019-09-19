@@ -16,9 +16,9 @@ public:
 				position.x += vector.x * (deltaTime / 1000.0);
 				position.y += vector.y * (deltaTime / 1000.0);
 				if (position.x < 0) position.x = 0.0;
-				else if (position.x > 800 - size.w) position.x = 800 - size.w;
+				else if (position.x > static_cast<double>(800) - size.w) position.x = static_cast<double>(800) - size.w;
 				if (position.y < 0) position.y = 0.0;
-				else if (position.y > 600 - size.h) position.y = 600 - size.h;
+				else if (position.y > static_cast<double>(600) - size.h) position.y = static_cast<double>(600) - size.h;
 			}
 		);
 	}

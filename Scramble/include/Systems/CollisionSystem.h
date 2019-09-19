@@ -35,12 +35,12 @@ public:
 		m_registry.view<Hitbox, Size, Positionf>().each(
 			[&](auto& entity, Hitbox& hitbox, Size& size, Positionf& position) {
 				hitbox.intersectedGrids.clear();
-				int xOffset = (size.w - hitbox.w) / 2, yOffset = (size.h - hitbox.h) / 2;
+				int xOffset = static_cast<int>((size.w - hitbox.w) / 2), yOffset = static_cast<int>((size.h - hitbox.h) / 2);
 				Points hitboxBounds{
 					Positionf{ position.x + xOffset,position.y + yOffset },
 					Positionf{ position.x + xOffset + hitbox.w ,position.y + yOffset + hitbox.h }
 				};
-				Grid one{ hitboxBounds.start.x / 8,hitboxBounds.start.y / 8 }, two{ hitboxBounds.end.x / 8,hitboxBounds.end.y / 8 };
+				Grid one{ static_cast<int>(hitboxBounds.start.x / 8),static_cast<int>(hitboxBounds.start.y / 8) }, two{ static_cast<int>(hitboxBounds.end.x / 8),static_cast<int>(hitboxBounds.end.y / 8) };
 				for (int i = one.x; i <= two.x; ++i)
 					for (int j = one.y; j <= two.y; ++j) {
 						ColliderInfo info(entity, hitbox, size, position, hitboxBounds);
@@ -51,7 +51,7 @@ public:
 		);
 		m_registry.view<Hitbox, Size, Positionf, Vector2D>().each(
 			[&](auto& entity, Hitbox& hitbox, Size& size, Positionf& position, Vector2D& vector) {
-				int xOffset = (size.w - hitbox.w) / 2, yOffset = (size.h - hitbox.h) / 2;
+				int xOffset = static_cast<int>((size.w - hitbox.w) / 2), yOffset = static_cast<int>((size.h - hitbox.h) / 2);
 				Points hitboxBounds{
 					Positionf{ position.x + xOffset,position.y + yOffset },
 					Positionf{ position.x + xOffset + hitbox.w ,position.y + yOffset + hitbox.h }
