@@ -18,7 +18,7 @@ public:
 		m_registry.assign<Positionf>(m_entity) = Positionf{ 750, 550 };
 		m_registry.assign<Hitbox>(m_entity) = Hitbox{ Hitbox::Type::enemy,"Enemy", 50, 50 };
 		m_registry.assign<Enemy>(m_entity) = Enemy{ Enemy::EnemyType::kamikaze, 100 };
-		m_registry.assign<Speed>(m_entity) = Speed{500.0,0,0, 1, 1 };
+		m_registry.assign<Speed>(m_entity) = Speed{500.0,300,300, 1, 1 };
 	}
 
 	void init() {}
