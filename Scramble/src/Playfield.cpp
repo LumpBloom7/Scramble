@@ -1,5 +1,5 @@
 #include "Playfield.h"
-#include "Components/PlayerComponent.h"
+#include "Components/PlayerControl.h"
 #include "Components/Vector2D.h"
 using namespace bloom::components;
 void Playfield::handleInput(double deltaTime) {
@@ -7,8 +7,8 @@ void Playfield::handleInput(double deltaTime) {
 	using bloom::input::KeyboardKey;
 	auto input = m_gameInstance->input;
 	m_dt -= deltaTime;
-	m_registry.group<>(entt::get<PlayerComponent, Vector2D, bloom::components::Size, Hitbox, Positionf, bloom::graphics::Sprite>).each(
-		[&](PlayerComponent& playerComp, Vector2D& vector, bloom::components::Size& size, Hitbox& hitbox, Positionf& position, bloom::graphics::Sprite& sprite) {
+	m_registry.group<>(entt::get<PlayerControl, Vector2D, bloom::components::Size, Hitbox, Positionf, bloom::graphics::Sprite, Speed>).each(
+		[&](PlayerControl& playerComp, Vector2D& vector, bloom::components::Size& size, Hitbox& hitbox, Positionf& position, bloom::graphics::Sprite& sprite, Speed& speed) {
 			vector = Vector2D();
 			if (input.keyboard.isPressed(KeyboardKey::KEY_UP))
 				vector.y -= 1;
@@ -27,21 +27,19 @@ void Playfield::handleInput(double deltaTime) {
 				vector.x /= length;
 				vector.y /= length;
 			}
-
-			vector.x *= playerComp.speed;
-			vector.y *= playerComp.speed;
 			if (playerComp.focused) {
 				if (!playerComp.wasFocused) {
 					sprite = bloom::graphics::Sprite(m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "PlayerSpriteFocused.png"));
 					playerComp.wasFocused = true;
 				}
-				vector.x /= 2, vector.y /= 2;
+				speed.maxSpeed = 300;
 			}
 			else {
 				if (playerComp.wasFocused) {
 					sprite = bloom::graphics::Sprite(m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "PlayerSprite.png"));
 					playerComp.wasFocused = false;
 				}
+				speed.maxSpeed = 600;
 			}
 
 			if (input.mouse.isPressed(MouseButton::MOUSE_LEFT) && m_dt <= 0.0) {
@@ -57,7 +55,6 @@ void Playfield::handleInput(double deltaTime) {
 void Playfield::update(double deltaTime) {
 	enemyMovementSystem.update(deltaTime);
 	movementSystem.update(deltaTime);
-	bulletMovementSystem.update(deltaTime);
 	collisionSystem.update(deltaTime);
 	normalizerSystem.update();
 }

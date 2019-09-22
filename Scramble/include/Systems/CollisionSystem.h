@@ -3,24 +3,8 @@
 #include "Components/Hitbox.h"
 #include "Components/Size.h"
 #include "Components/Position.h"
-#include "Components/PlayerComponent.h"
-#include "Components/EnemyComponent.h"
-
-struct Points {
-	Positionf start, end;
-};
-
-struct ColliderInfo {
-	using Position = bloom::components::Position;
-	using Size = bloom::components::Size;
-
-	ColliderInfo(entt::entity e, Hitbox& h, Size& s, Positionf& p, Points hb) : entityID(e), hitbox(h), size(s), position(p), hitboxBounds(hb) {}
-	entt::entity entityID;
-	Hitbox& hitbox;
-	Size& size;
-	Positionf& position;
-	Points hitboxBounds;
-};
+#include "Components/PlayerControl.h"
+#include "Components/Enemy.h"
 
 class CollisionSystem : public bloom::systems::System {
 public:
@@ -49,8 +33,8 @@ public:
 					}
 			}
 		);
-		m_registry.view<Hitbox, Size, Positionf, Vector2D>().each(
-			[&](auto& entity, Hitbox& hitbox, Size& size, Positionf& position, Vector2D& vector) {
+		m_registry.view<Hitbox, Size, Positionf, Vector2D, Speed>().each(
+			[&](auto& entity, Hitbox& hitbox, Size& size, Positionf& position, Vector2D& vector, Speed& speed) {
 				int xOffset = static_cast<int>((size.w - hitbox.w) / 2), yOffset = static_cast<int>((size.h - hitbox.h) / 2);
 				Points hitboxBounds{
 					Positionf{ position.x + xOffset,position.y + yOffset },
@@ -59,7 +43,7 @@ public:
 				std::unordered_map<entt::entity, bool> processed{};
 				for (auto& grid : hitbox.intersectedGrids) {
 					for (auto& collider : uniformGrid[grid.x][grid.y]) {
-						if (entity != collider.entityID && !processed[collider.entityID] && (collider.hitbox.type != Hitbox::Type::friendlyBullet && hitbox.type != Hitbox::Type::friendlyBullet)) {
+						if (entity != collider.entityID && !processed[collider.entityID]) {
 							processed[collider.entityID] = true;
 							bool xCollide = false, yCollide = false;
 							if (hitboxBounds.start.x < collider.hitboxBounds.end.x &&
@@ -70,29 +54,31 @@ public:
 
 							if (xCollide && yCollide) {
 								std::cout << "[" << hitbox.name << "](" << entity << ") collided with [" << collider.hitbox.name << "](" << collider.entityID << ")." << std::endl;
-								if (xCollide) {
-									position.x -= vector.x * (deltaTime / 1000);
+								if (hitbox.solid && collider.hitbox.solid) {
+									if (xCollide) {
+										position.x -= (vector.x * speed.xValue) * (deltaTime / 1000);
+									}
+									if (yCollide) {
+										position.y -= (vector.y * speed.yValue)* (deltaTime / 1000);
+									}
+
+									xCollide = false, yCollide = false;
+									hitboxBounds = Points{
+										Positionf{ position.x + xOffset,position.y + yOffset },
+										Positionf{ position.x + xOffset + hitbox.w ,position.y + yOffset + hitbox.h }
+									};
+
+									if (hitboxBounds.start.x < collider.hitboxBounds.end.x &&
+										hitboxBounds.end.x > collider.hitboxBounds.start.x) xCollide = true;
+
+									if (hitboxBounds.start.y < collider.hitboxBounds.end.y &&
+										hitboxBounds.end.y > collider.hitboxBounds.start.y) yCollide = true;
+
+									if (!xCollide && yCollide)
+										position.y += (vector.y * speed.xValue) * (deltaTime / 1000);
+									if (!yCollide && xCollide)
+										position.x += (vector.x * speed.yValue) * (deltaTime / 1000);
 								}
-								if (yCollide) {
-									position.y -= vector.y * (deltaTime / 1000);
-								}
-
-								xCollide = false, yCollide = false;
-								hitboxBounds = Points{
-									Positionf{ position.x + xOffset,position.y + yOffset },
-									Positionf{ position.x + xOffset + hitbox.w ,position.y + yOffset + hitbox.h }
-								};
-
-								if (hitboxBounds.start.x < collider.hitboxBounds.end.x &&
-									hitboxBounds.end.x > collider.hitboxBounds.start.x) xCollide = true;
-
-								if (hitboxBounds.start.y < collider.hitboxBounds.end.y &&
-									hitboxBounds.end.y > collider.hitboxBounds.start.y) yCollide = true;
-
-								if (!xCollide && yCollide)
-									position.y += vector.y * (deltaTime / 1000);
-								if (!yCollide && xCollide)
-									position.x += vector.x * (deltaTime / 1000);
 							}
 						}
 					}

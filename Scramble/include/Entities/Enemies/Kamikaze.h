@@ -2,10 +2,11 @@
 #include "stdIncludes.h"
 #include "GameObject.h"
 #include "StaticVariables.h"
-#include "Components/EnemyComponent.h"
+#include "Components/Enemy.h"
 #include "Components/Vector2D.h"
 #include "Components/Positionf.h"
 #include "Components/Hitbox.h"
+#include "Components/Enemy.h"
 
 class Kamikaze : bloom::GameObject {
 public:
@@ -16,7 +17,8 @@ public:
 		m_registry.assign<Vector2D>(m_entity);
 		m_registry.assign<Positionf>(m_entity) = Positionf{ 750, 550 };
 		m_registry.assign<Hitbox>(m_entity) = Hitbox{ Hitbox::Type::enemy,"Enemy", 50, 50 };
-		m_registry.assign<EnemyComponent>(m_entity) = EnemyComponent{ EnemyComponent::EnemyType::kamikaze, 100, 100, 500.0, 500.0, 400.0 };
+		m_registry.assign<Enemy>(m_entity) = Enemy{ Enemy::EnemyType::kamikaze, 100 };
+		m_registry.assign<Speed>(m_entity) = Speed{500.0,0,0, 1, 1 };
 	}
 
 	void init() {}

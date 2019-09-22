@@ -2,22 +2,22 @@
 #include "stdIncludes.h"
 #include "GameObject.h"
 #include "StaticVariables.h"
-#include "Components/EnemyComponent.h"
+#include "Components/Enemy.h"
 #include "Components/Vector2D.h"
 #include "Components/Positionf.h"
 #include "Components/Hitbox.h"
-#include "Components/BulletComponent.h"
+#include "Components/Speed.h"
 
 struct Bullet : public bloom::GameObject {
 	Bullet(entt::registry& registry, bloom::Game*& gameInstance) : GameObject::GameObject(registry, gameInstance) {
 		std::clog << "Bullet(" << m_entity << ") has been created." << std::endl;
 		m_registry.assign<bloom::components::Sprite>(m_entity, c_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "Bullet.png"));
 		m_registry.replace<bloom::components::Size>(m_entity, 8, 8);
-		m_registry.assign<BulletComponent>(m_entity);
+		m_registry.assign<Speed>(m_entity, Speed{ 300,300,300,0 });
 	}
 	void init() { }
 	void init(Positionf position, Positionf target, Hitbox::Type type) {
-		m_registry.assign<Hitbox>(m_entity) = Hitbox{ Hitbox::Type::friendlyBullet,"Bullet", 8, 8 };
+		m_registry.assign<Hitbox>(m_entity) = Hitbox{ type,"Bullet", 8, 8, 0, 0, false };
 		position.x -= 4, position.y -= 4;
 		target.x = target.x + (target.x < 0 ? 4 : -4);
 		target.y = target.y + (target.y < 0 ? 4 : -4);
