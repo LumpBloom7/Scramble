@@ -5,6 +5,7 @@
 #include "Components/Position.h"
 #include "Components/PlayerControl.h"
 #include "Components/Enemy.h"
+#include "Components/Destroyed.h"
 
 class CollisionSystem : public bloom::systems::System {
 public:
@@ -16,7 +17,7 @@ public:
 		timeDifference += deltaTime;
 		std::unordered_map<int, std::unordered_map<int, std::vector<ColliderInfo>>> uniformGrid{};
 
-		m_registry.view<Hitbox, Size, Positionf>().each(
+		m_registry.group<>(entt::get<Hitbox, Size, Positionf>, entt::exclude<Destroyed>).each(
 			[&](auto& entity, Hitbox& hitbox, Size& size, Positionf& position) {
 				hitbox.intersectedGrids.clear();
 				int xOffset = static_cast<int>((size.w - hitbox.w) / 2), yOffset = static_cast<int>((size.h - hitbox.h) / 2);
@@ -33,17 +34,18 @@ public:
 					}
 			}
 		);
-		m_registry.view<Hitbox, Size, Positionf, Vector2D, Speed>().each(
+		m_registry.group<>(entt::get<Hitbox, Size, Positionf, Vector2D, Speed>).each(
 			[&](auto& entity, Hitbox& hitbox, Size& size, Positionf& position, Vector2D& vector, Speed& speed) {
 				int xOffset = static_cast<int>((size.w - hitbox.w) / 2), yOffset = static_cast<int>((size.h - hitbox.h) / 2);
 				Points hitboxBounds{
 					Positionf{ position.x + xOffset,position.y + yOffset },
 					Positionf{ position.x + xOffset + hitbox.w ,position.y + yOffset + hitbox.h }
 				};
+				ColliderInfo info(entity, hitbox, size, position, hitboxBounds);
 				std::unordered_map<entt::entity, bool> processed{};
 				for (auto& grid : hitbox.intersectedGrids) {
 					for (auto& collider : uniformGrid[grid.x][grid.y]) {
-						if (entity != collider.entityID && !processed[collider.entityID]) {
+						if (entity != collider.entityID && !processed[collider.entityID] && !m_registry.has<Destroyed>(collider.entityID) && !m_registry.has<Destroyed>(entity)) {
 							processed[collider.entityID] = true;
 							bool xCollide = false, yCollide = false;
 							if (hitboxBounds.start.x < collider.hitboxBounds.end.x &&
@@ -54,12 +56,13 @@ public:
 
 							if (xCollide && yCollide) {
 								std::cout << "[" << hitbox.name << "](" << entity << ") collided with [" << collider.hitbox.name << "](" << collider.entityID << ")." << std::endl;
+								hitbox.callback(m_registry, info, collider);
 								if (hitbox.solid && collider.hitbox.solid) {
 									if (xCollide) {
 										position.x -= (vector.x * speed.xValue) * (deltaTime / 1000);
 									}
 									if (yCollide) {
-										position.y -= (vector.y * speed.yValue)* (deltaTime / 1000);
+										position.y -= (vector.y * speed.yValue) * (deltaTime / 1000);
 									}
 
 									xCollide = false, yCollide = false;
@@ -82,6 +85,7 @@ public:
 							}
 						}
 					}
+
 				}
 			}
 		);

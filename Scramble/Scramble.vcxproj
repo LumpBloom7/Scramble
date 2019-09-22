@@ -33,6 +33,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Components\Damage.h" />
+    <ClInclude Include="include\Components\Destroyed.h" />
     <ClInclude Include="include\Components\Enemy.h" />
     <ClInclude Include="include\Components\Health.h" />
     <ClInclude Include="include\Components\Hitbox.h" />
@@ -43,6 +45,7 @@
     <ClInclude Include="include\Components\Speed.h" />
     <ClInclude Include="include\Components\Vector2D.h" />
     <ClInclude Include="include\Entities\Bullet.h" />
+    <ClInclude Include="include\Entities\Callbacks\Hitbox\BulletCallback.h" />
     <ClInclude Include="include\Entities\Enemies\Enemy.h" />
     <ClInclude Include="include\Entities\Enemies\Kamikaze.h" />
     <ClInclude Include="include\Entities\Player.h" />
@@ -52,6 +55,7 @@
     <ClInclude Include="include\Systems\CollisionSystem.h" />
     <ClInclude Include="include\Systems\EnemyAI\Kamikaze.h" />
     <ClInclude Include="include\Systems\MovementSystem.h" />
+    <ClInclude Include="include\Systems\ObjectDestroyer.h" />
     <ClInclude Include="include\Systems\PositionNormalizer.h" />
     <ClInclude Include="include\Systems\EnemyBehavior.h" />
   </ItemGroup>

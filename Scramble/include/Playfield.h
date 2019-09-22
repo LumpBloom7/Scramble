@@ -7,6 +7,7 @@
 #include "Systems/PositionNormalizer.h"
 #include "Systems/EnemyBehavior.h"
 #include "Systems/CollisionSystem.h"
+#include "Systems/ObjectDestroyer.h"
 #include "Entities/Player.h"
 #include "Entities/Bullet.h"
 #include "Entities/Enemies/Enemy.h"
@@ -28,6 +29,7 @@ private:
 	PositionNormalizer normalizerSystem = PositionNormalizer(m_registry);
 	EnemyBehavior enemyMovementSystem = EnemyBehavior(m_registry);
 	CollisionSystem collisionSystem = CollisionSystem(m_registry);
+	ObjectDestroyer destroyerSystem = ObjectDestroyer(m_registry);
 	PlayerObject player = PlayerObject(m_registry, m_gameInstance);
 	EnemyObject enemy = EnemyObject(m_registry, m_gameInstance);
 	Kamikaze kamikaze = Kamikaze(m_registry, m_gameInstance);

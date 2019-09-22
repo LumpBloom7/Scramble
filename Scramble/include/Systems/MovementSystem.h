@@ -6,6 +6,7 @@
 #include "Components/Speed.h"
 #include "Components/PlayerControl.h"
 #include "Components/Enemy.h"
+#include "Components/Destroyed.h"
 
 class MovementSystem : bloom::systems::System {
 public:
@@ -13,7 +14,7 @@ public:
 
 	void update(double deltaTime = 0.0) {
 		deltaTime /= 1000.0;
-		m_registry.view<Vector2D, Positionf, Speed, bloom::components::Size>().each(
+		m_registry.group<>(entt::get<Vector2D, Positionf, Speed, bloom::components::Size>, entt::exclude<Destroyed>).each(
 			[&](auto& entity, Vector2D& vector, Positionf& position, Speed& speed, bloom::components::Size& size) {
 				//if (!m_registry.has<Enemy>(entity)) {
 					position.x += vector.x * std::abs(speed.xValue) * deltaTime;
