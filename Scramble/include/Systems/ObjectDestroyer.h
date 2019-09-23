@@ -12,6 +12,7 @@ public:
 		auto view = m_registry.view<Destroyed>();
 		for (auto entity : view) {
 			m_registry.destroy(entity);
+			std::clog << "Entity " << entity << " has been destroyed." << std::endl;
 		}
 	}
 };
