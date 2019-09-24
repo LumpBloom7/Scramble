@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entities\Bullet.cpp" />
+    <ClCompile Include="src\Entities\Enemy.cpp" />
+    <ClCompile Include="src\Entities\Player.cpp" />
     <ClCompile Include="src\getExePath.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Playfield.cpp" />
@@ -46,8 +49,7 @@
     <ClInclude Include="include\Components\Vector2D.h" />
     <ClInclude Include="include\Entities\Bullet.h" />
     <ClInclude Include="include\Entities\Callbacks\Hitbox\BulletCallback.h" />
-    <ClInclude Include="include\Entities\Enemies\Enemy.h" />
-    <ClInclude Include="include\Entities\Enemies\Kamikaze.h" />
+    <ClInclude Include="include\Entities\Enemy.h" />
     <ClInclude Include="include\Entities\Player.h" />
     <ClInclude Include="include\getExePath.h" />
     <ClInclude Include="include\Playfield.h" />

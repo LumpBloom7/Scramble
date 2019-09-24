@@ -10,12 +10,15 @@
 #include "Systems/ObjectDestroyer.h"
 #include "Entities/Player.h"
 #include "Entities/Bullet.h"
-#include "Entities/Enemies/Enemy.h"
-#include "Entities/Enemies/Kamikaze.h"
+#include "Entities/Enemy.h"
 
 class Playfield {
 public:
-	Playfield(bloom::Game*& gameInstance) : m_gameInstance(gameInstance) {}
+	Playfield(bloom::Game*& gameInstance) : m_gameInstance(gameInstance) {
+		gameObjects::spawnPlayerOne(m_registry, gameInstance);
+		gameObjects::spawnBasicEnemy(m_registry, gameInstance);
+		gameObjects::spawnKamikaze(m_registry, gameInstance);
+	}
 	void handleInput(double deltaTime = 0.0);
 	void update(double deltaTime = 0.0);
 	void draw();
@@ -30,11 +33,7 @@ private:
 	EnemyBehavior enemyMovementSystem = EnemyBehavior(m_registry);
 	CollisionSystem collisionSystem = CollisionSystem(m_registry);
 	ObjectDestroyer destroyerSystem = ObjectDestroyer(m_registry);
-	PlayerObject player = PlayerObject(m_registry, m_gameInstance);
-	EnemyObject enemy = EnemyObject(m_registry, m_gameInstance);
-	Kamikaze kamikaze = Kamikaze(m_registry, m_gameInstance);
 
-	std::deque<Bullet> bullets;
 	double m_dt = 200.0;
 
 };

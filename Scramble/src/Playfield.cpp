@@ -45,7 +45,7 @@ void Playfield::handleInput(double deltaTime) {
 			if (input.mouse.isPressed(MouseButton::MOUSE_LEFT) && m_dt <= 0.0) {
 				Positionf spawn{ position.x + size.w / 2, position.y + size.h / 2 };
 				Positionf target{ input.mouse.getX() - spawn.x, input.mouse.getY() - spawn.y };
-				bullets.emplace_back(m_registry, m_gameInstance).init(spawn, target, Hitbox::Type::friendlyBullet);
+				gameObjects::spawnBasicBullet(m_registry, m_gameInstance, spawn, target, Hitbox::Type::friendlyBullet);
 				m_dt = 200.0;
 			}
 		}
