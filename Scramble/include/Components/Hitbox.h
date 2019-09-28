@@ -37,7 +37,5 @@ struct Hitbox {
 	double xOffset, yOffset;
 	bool solid = true;
 	std::function<void(entt::registry& registry, ColliderInfo&, ColliderInfo&)> callback = [&](entt::registry& registry, ColliderInfo& first, ColliderInfo& second) {std::clog << "~ Callback is executed, but it doesn't do anything." << std::endl;};
-
-	std::vector<Grid> intersectedGrids;
 };
 

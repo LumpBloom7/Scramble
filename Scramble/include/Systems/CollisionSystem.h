@@ -10,11 +10,11 @@ namespace systems {
 	static void collisionSystem(entt::registry& registry, double deltaTime = 0.0) {
 		using Position = bloom::components::Position;
 		using Size = bloom::components::Size;
+		std::unordered_map<entt::entity, std::vector<Grid>> intersectMap{};
 		std::unordered_map<int, std::unordered_map<int, std::vector<ColliderInfo>>> uniformGrid{};
 
 		registry.group<>(entt::get<Hitbox, Size, Positionf>, entt::exclude<Destroyed>).each(
 			[&](auto& entity, Hitbox& hitbox, Size& size, Positionf& position) {
-				hitbox.intersectedGrids.clear();
 				int xOffset = static_cast<int>((size.w - hitbox.w) / 2), yOffset = static_cast<int>((size.h - hitbox.h) / 2);
 				Points hitboxBounds{
 					Positionf{ position.x + xOffset,position.y + yOffset },
@@ -25,7 +25,7 @@ namespace systems {
 					for (int j = one.y; j <= two.y; ++j) {
 						ColliderInfo info(entity, hitbox, size, position, hitboxBounds);
 						uniformGrid[i][j].emplace_back(info);
-						hitbox.intersectedGrids.emplace_back(Grid{ i,j });
+						intersectMap[entity].emplace_back(Grid{ i,j });
 					}
 			}
 		);
@@ -38,7 +38,7 @@ namespace systems {
 				};
 				ColliderInfo info(entity, hitbox, size, position, hitboxBounds);
 				std::unordered_map<entt::entity, bool> processed{};
-				for (auto& grid : info.hitbox.intersectedGrids) {
+				for (auto& grid : intersectMap[entity]) {
 					for (auto& collider : uniformGrid[grid.x][grid.y]) {
 						if (entity != collider.entityID && !processed[collider.entityID] && !registry.has<Destroyed>(collider.entityID) && !registry.has<Destroyed>(entity)) {
 							processed[collider.entityID] = true;
