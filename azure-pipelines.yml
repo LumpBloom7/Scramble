@@ -46,11 +46,11 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
     verbosityRestore: 'Normal'
-
+  
 - task: VSBuild@1
-  displayName: 'Build solution'
   inputs:
-    solution: '$(solution)'
+    solution: '*.sln'
     vsVersion: '16.0'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    maximumCpuCount: true
