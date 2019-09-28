@@ -21,5 +21,4 @@ void gameObjects::spawnBasicBullet(entt::registry& registry, bloom::Game*& gameI
 		target.y /= length;
 	}
 	registry.assign<Vector2D>(thisEntity, Vector2D{ target.x, target.y });
-
 }

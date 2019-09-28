@@ -30,5 +30,4 @@ private:
 	bloom::systems::RenderSystem renderSystem = bloom::systems::RenderSystem(m_registry);
 
 	double m_dt = 200.0;
-
 };
