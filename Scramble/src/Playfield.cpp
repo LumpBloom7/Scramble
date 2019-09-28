@@ -32,14 +32,16 @@ void Playfield::handleInput(double deltaTime) {
 					sprite = bloom::graphics::Sprite(m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "PlayerSpriteFocused.png"));
 					playerComp.wasFocused = true;
 				}
-				speed.maxSpeed = 300;
+				speed.xValue = 300;
+				speed.yValue = 300;
 			}
 			else {
 				if (playerComp.wasFocused) {
 					sprite = bloom::graphics::Sprite(m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "PlayerSprite.png"));
 					playerComp.wasFocused = false;
 				}
-				speed.maxSpeed = 600;
+				speed.xValue = 600;
+				speed.yValue = 600;
 			}
 
 			if (input.mouse.isPressed(MouseButton::MOUSE_LEFT) && m_dt <= 0.0) {
