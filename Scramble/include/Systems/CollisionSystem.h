@@ -1,5 +1,4 @@
 #pragma once
-#include "Systems/DefaultSystem.h"
 #include "Components/Hitbox.h"
 #include "Components/Size.h"
 #include "Components/Position.h"
@@ -7,17 +6,13 @@
 #include "Components/Enemy.h"
 #include "Components/Destroyed.h"
 
-class CollisionSystem : public bloom::systems::System {
-public:
-	using bloom::systems::System::DefaultSystem;
-	using Position = bloom::components::Position;
-	using Size = bloom::components::Size;
-
-	void update(double deltaTime = 0.0) {
-		timeDifference += deltaTime;
+namespace systems {
+	static void collisionSystem(entt::registry& registry, double deltaTime = 0.0) {
+		using Position = bloom::components::Position;
+		using Size = bloom::components::Size;
 		std::unordered_map<int, std::unordered_map<int, std::vector<ColliderInfo>>> uniformGrid{};
 
-		m_registry.group<>(entt::get<Hitbox, Size, Positionf>, entt::exclude<Destroyed>).each(
+		registry.group<>(entt::get<Hitbox, Size, Positionf>, entt::exclude<Destroyed>).each(
 			[&](auto& entity, Hitbox& hitbox, Size& size, Positionf& position) {
 				hitbox.intersectedGrids.clear();
 				int xOffset = static_cast<int>((size.w - hitbox.w) / 2), yOffset = static_cast<int>((size.h - hitbox.h) / 2);
@@ -34,7 +29,7 @@ public:
 					}
 			}
 		);
-		m_registry.group<>(entt::get<Hitbox, Size, Positionf, Vector2D, Speed>).each(
+		registry.group<>(entt::get<Hitbox, Size, Positionf, Vector2D, Speed>).each(
 			[&](auto& entity, Hitbox& hitbox, Size& size, Positionf& position, Vector2D& vector, Speed& speed) {
 				int xOffset = static_cast<int>((size.w - hitbox.w) / 2), yOffset = static_cast<int>((size.h - hitbox.h) / 2);
 				Points hitboxBounds{
@@ -43,9 +38,9 @@ public:
 				};
 				ColliderInfo info(entity, hitbox, size, position, hitboxBounds);
 				std::unordered_map<entt::entity, bool> processed{};
-				for (auto& grid : hitbox.intersectedGrids) {
+				for (auto& grid : info.hitbox.intersectedGrids) {
 					for (auto& collider : uniformGrid[grid.x][grid.y]) {
-						if (entity != collider.entityID && !processed[collider.entityID] && !m_registry.has<Destroyed>(collider.entityID) && !m_registry.has<Destroyed>(entity)) {
+						if (entity != collider.entityID && !processed[collider.entityID] && !registry.has<Destroyed>(collider.entityID) && !registry.has<Destroyed>(entity)) {
 							processed[collider.entityID] = true;
 							bool xCollide = false, yCollide = false;
 							if (hitboxBounds.start.x < collider.hitboxBounds.end.x &&
@@ -56,7 +51,7 @@ public:
 
 							if (xCollide && yCollide) {
 								std::cout << "[" << hitbox.name << "](" << entity << ") collided with [" << collider.hitbox.name << "](" << collider.entityID << ")." << std::endl;
-								hitbox.callback(m_registry, info, collider);
+								hitbox.callback(registry, info, collider);
 								if (hitbox.solid && collider.hitbox.solid) {
 									if (xCollide) {
 										position.x -= (vector.x * speed.xValue) * (deltaTime / 1000);
@@ -90,7 +85,4 @@ public:
 			}
 		);
 	}
-
-private:
-	double timeDifference = 0.0;
-};
+}

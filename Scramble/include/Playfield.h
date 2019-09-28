@@ -28,11 +28,6 @@ private:
 	bloom::Game*& m_gameInstance;
 
 	bloom::systems::RenderSystem renderSystem = bloom::systems::RenderSystem(m_registry);
-	MovementSystem movementSystem = MovementSystem(m_registry);
-	PositionNormalizer normalizerSystem = PositionNormalizer(m_registry);
-	EnemyBehavior enemyMovementSystem = EnemyBehavior(m_registry);
-	CollisionSystem collisionSystem = CollisionSystem(m_registry);
-	ObjectDestroyer destroyerSystem = ObjectDestroyer(m_registry);
 
 	double m_dt = 200.0;
 
