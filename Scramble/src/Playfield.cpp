@@ -7,6 +7,7 @@ void Playfield::handleInput(double deltaTime) {
 	using bloom::input::KeyboardKey;
 	auto input = m_gameInstance->input;
 	m_dt -= deltaTime;
+	auto& camera = m_registry.ctx<Camera>();
 	m_registry.group<>(entt::get<PlayerControl, Vector2D, bloom::components::Size, Hitbox, Positionf, bloom::graphics::Sprite, Speed>).each(
 		[&](PlayerControl& playerComp, Vector2D& vector, bloom::components::Size& size, Hitbox& hitbox, Positionf& position, bloom::graphics::Sprite& sprite, Speed& speed) {
 			vector = Vector2D();
@@ -46,7 +47,7 @@ void Playfield::handleInput(double deltaTime) {
 
 			if (input.mouse.isPressed(MouseButton::MOUSE_LEFT) && m_dt <= 0.0) {
 				Positionf spawn{ position.x + size.w / 2, position.y + size.h / 2 };
-				Positionf target{ input.mouse.getX() - spawn.x, input.mouse.getY() - spawn.y };
+				Positionf target{ input.mouse.getX() - spawn.x + camera.xOffset, input.mouse.getY() - spawn.y + camera.yOffset };
 				gameObjects::spawnBasicBullet(m_registry, m_gameInstance, spawn, target, Hitbox::Type::friendlyBullet);
 				m_dt = 200.0;
 			}

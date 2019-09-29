@@ -23,14 +23,14 @@ namespace systems {
 					if (position.y < 0) position.y = 0.0;
 					else if (position.y > static_cast<double>(600) - size.h) position.y = static_cast<double>(600) - size.h;
 				}*/
-				if (registry.has<Hitbox>(entity)) {
+				/*if (registry.has<Hitbox>(entity)) {
 					if (registry.get<Hitbox>(entity).type == Hitbox::Type::friendlyBullet) {
 						if (position.x < -200) registry.assign<Destroyed>(entity);
 						else if (position.x > static_cast<double>(1000)) registry.assign<Destroyed>(entity);
 						if (position.y < -200) registry.assign<Destroyed>(entity);
 						else if (position.y > static_cast<double>(800)) registry.assign<Destroyed>(entity);
 					}
-				}
+				}*/
 			}
 		);
 	}
