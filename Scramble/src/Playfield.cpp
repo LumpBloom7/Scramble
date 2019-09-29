@@ -67,6 +67,11 @@ void Playfield::draw() {
 	systems::scrambleRenderSystem(m_registry);
 	auto input = m_gameInstance->input;
 	m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "Crosshair32.png")->render(std::nullopt, { input.mouse.getX() - 16, input.mouse.getY() - 16, 32, 32 });
+
+	auto& camera = m_registry.ctx<Camera>();
+	text["cameraInfo"]->setText("x: " + std::to_string(camera.xOffset) + ", y: " + std::to_string(camera.yOffset));
+	text["cameraInfo"]->render(std::nullopt, SDL_Point{ 0,0 });
+
 }
 
 

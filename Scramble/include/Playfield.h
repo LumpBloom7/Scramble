@@ -1,5 +1,6 @@
 #pragma once
 #include <deque>
+#include <string>
 #include "entt/entt.hpp"
 #include "Game.h"
 #include "Systems/Systems.h"
@@ -14,6 +15,13 @@
 #include "Entities/Bullet.h"
 #include "Entities/Enemy.h"
 #include "Components/SceneContext/Camera.h"
+#include "Graphics/SpriteText.h"
+#include "Graphics/Font.h"
+#include "Graphics/FontStore.h"
+
+using namespace bloom::graphics;
+const bloom::graphics::FontStyle defaultFontStyle{ 20 };
+const bloom::graphics::TextStyle defaultTextStyle{ TextStyle::BlendingMode::blended };
 
 class Playfield {
 public:
@@ -22,6 +30,8 @@ public:
 		gameObjects::spawnPlayerOne(m_registry, gameInstance);
 		gameObjects::spawnBasicEnemy(m_registry, gameInstance);
 		gameObjects::spawnKamikaze(m_registry, gameInstance);
+		fontStore.load(ASSETSDIR / "Assets" / "Fonts" / "Cascadia.ttf", 0, defaultFontStyle);
+		text.emplace("cameraInfo", std::make_shared<SpriteText>(m_gameInstance->_getRenderer(), fontStore[0], "0x0", defaultTextStyle));
 	}
 	void handleInput(double deltaTime = 0.0);
 	void update(double deltaTime = 0.0);
@@ -30,8 +40,8 @@ public:
 private:
 	entt::registry m_registry;
 	bloom::Game*& m_gameInstance;
-
-	bloom::systems::RenderSystem renderSystem = bloom::systems::RenderSystem(m_registry);
+	bloom::graphics::FontStore fontStore;
+	std::unordered_map<std::string, std::shared_ptr<SpriteText>> text;
 
 	double m_dt = 200.0;
 };
