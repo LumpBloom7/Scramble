@@ -8,13 +8,17 @@
 #include "Systems/EnemyBehavior.h"
 #include "Systems/CollisionSystem.h"
 #include "Systems/ObjectDestroyer.h"
+#include "Systems/ScrambleRender.h"
+#include "Systems/CameraMovement.h"
 #include "Entities/Player.h"
 #include "Entities/Bullet.h"
 #include "Entities/Enemy.h"
+#include "Components/SceneContext/Camera.h"
 
 class Playfield {
 public:
 	Playfield(bloom::Game*& gameInstance) : m_gameInstance(gameInstance) {
+		m_registry.set<Camera>(Camera{ 0, 0 });
 		gameObjects::spawnPlayerOne(m_registry, gameInstance);
 		gameObjects::spawnBasicEnemy(m_registry, gameInstance);
 		gameObjects::spawnKamikaze(m_registry, gameInstance);

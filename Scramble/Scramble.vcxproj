@@ -45,6 +45,7 @@
     <ClInclude Include="include\Components\Name.h" />
     <ClInclude Include="include\Components\PlayerControl.h" />
     <ClInclude Include="include\Components\Positionf.h" />
+    <ClInclude Include="include\Components\SceneContext\Camera.h" />
     <ClInclude Include="include\Components\Speed.h" />
     <ClInclude Include="include\Components\Vector2D.h" />
     <ClInclude Include="include\Entities\Bullet.h" />
@@ -54,12 +55,14 @@
     <ClInclude Include="include\getExePath.h" />
     <ClInclude Include="include\Playfield.h" />
     <ClInclude Include="include\StaticVariables.h" />
+    <ClInclude Include="include\Systems\CameraMovement.h" />
     <ClInclude Include="include\Systems\CollisionSystem.h" />
     <ClInclude Include="include\Systems\EnemyAI\Kamikaze.h" />
     <ClInclude Include="include\Systems\MovementSystem.h" />
     <ClInclude Include="include\Systems\ObjectDestroyer.h" />
     <ClInclude Include="include\Systems\PositionNormalizer.h" />
     <ClInclude Include="include\Systems\EnemyBehavior.h" />
+    <ClInclude Include="include\Systems\ScrambleRender.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

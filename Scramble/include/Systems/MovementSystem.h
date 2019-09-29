@@ -16,13 +16,13 @@ namespace systems {
 				position.x += vector.x * std::abs(speed.xValue) * deltaTime;
 				position.y += vector.y * std::abs(speed.yValue) * deltaTime;
 
-				if (registry.has<PlayerControl>(entity)) {
+				/*if (registry.has<PlayerControl>(entity)) {
 					auto& size = registry.get<bloom::components::Size>(entity);
 					if (position.x < 0) position.x = 0.0;
 					else if (position.x > static_cast<double>(800) - size.w) position.x = static_cast<double>(800) - size.w;
 					if (position.y < 0) position.y = 0.0;
 					else if (position.y > static_cast<double>(600) - size.h) position.y = static_cast<double>(600) - size.h;
-				}
+				}*/
 				if (registry.has<Hitbox>(entity)) {
 					if (registry.get<Hitbox>(entity).type == Hitbox::Type::friendlyBullet) {
 						if (position.x < -200) registry.assign<Destroyed>(entity);

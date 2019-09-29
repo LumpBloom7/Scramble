@@ -60,10 +60,11 @@ void Playfield::update(double deltaTime) {
 	systems::collisionSystem(m_registry, deltaTime);
 	systems::objectDestroyerSystem(m_registry);
 	systems::positionNormalizerSystem(m_registry);
+	systems::cameraMovementSystem(m_registry);
 }
 
 void Playfield::draw() {
-	renderSystem.update();
+	systems::scrambleRenderSystem(m_registry);
 	auto input = m_gameInstance->input;
 	m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "Crosshair32.png")->render(std::nullopt, { input.mouse.getX() - 16, input.mouse.getY() - 16, 32, 32 });
 }
