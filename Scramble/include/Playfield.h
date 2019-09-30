@@ -32,6 +32,7 @@ public:
 		gameObjects::spawnKamikaze(m_registry, gameInstance);
 		fontStore.load(ASSETSDIR / "Assets" / "Fonts" / "Cascadia.ttf", 0, defaultFontStyle);
 		text.emplace("cameraInfo", std::make_shared<SpriteText>(m_gameInstance->_getRenderer(), fontStore[0], "0x0", defaultTextStyle));
+		text.emplace("playerInfo", std::make_shared<SpriteText>(m_gameInstance->_getRenderer(), fontStore[0], "0x1", defaultTextStyle));
 	}
 	void handleInput(double deltaTime = 0.0);
 	void update(double deltaTime = 0.0);

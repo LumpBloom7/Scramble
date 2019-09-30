@@ -70,9 +70,11 @@ void Playfield::draw() {
 	m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "Crosshair32.png")->render(std::nullopt, { input.mouse.getX() - 16, input.mouse.getY() - 16, 32, 32 });
 
 	auto& camera = m_registry.ctx<Camera>();
-	text["cameraInfo"]->setText("Camera Offset: { " + std::to_string(camera.xOffset) + ", " + std::to_string(camera.yOffset) + " }");
+	auto& playerPos = m_registry.get<Position>(m_registry.view<PlayerControl>()[0]);
+	text["cameraInfo"]->setText("Camera Offset  : { " + std::to_string(camera.xOffset) + ", " + std::to_string(camera.yOffset) + " }");
 	text["cameraInfo"]->render(std::nullopt, SDL_Point{ 0,0 });
-
+	text["playerInfo"]->setText("Player position: { " + std::to_string(playerPos.x) + ", " + std::to_string(playerPos.y) + " } / { " + std::to_string(playerPos.x - camera.xOffset) + ", " + std::to_string(playerPos.y - camera.yOffset) + " }");
+	text["playerInfo"]->render(std::nullopt, SDL_Point{ 0,20 });
 }
 
 
