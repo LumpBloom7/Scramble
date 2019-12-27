@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
 	SDL_DisplayMode dm;
 	SDL_GetCurrentDisplayMode(0, &dm);
 	std::cout << "Screen width is " << dm.w << ", screen height is " << dm.h << "." << std::endl;
-
+	
 	srand(static_cast<uint32_t>(time(nullptr)));
 	SDL_Color randColor = { 255, 0, 255 };
 	game->setColor(randColor);
