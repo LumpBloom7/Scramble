@@ -24,13 +24,7 @@
     <ClCompile Include="src\getExePath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Systems\EnemyAI\Kamikaze.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Entities\Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Entities\Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Entities\Bullet.cpp">
@@ -74,9 +68,6 @@
     <ClInclude Include="include\Components\Health.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Components\Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Components\Name.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -86,13 +77,7 @@
     <ClInclude Include="include\Components\PlayerControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Systems\EnemyAI\Kamikaze.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Systems\MovementSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Systems\EnemyBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Components\MoveFactor.h">
@@ -110,9 +95,6 @@
     <ClInclude Include="include\Entities\Callbacks\Hitbox\BulletCallback.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Entities\Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Components\SceneContext\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -122,5 +104,10 @@
     <ClInclude Include="include\Systems\ScrambleRender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\Assets\Dinosaurs\sheets\Vita\idle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

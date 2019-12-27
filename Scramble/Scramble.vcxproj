@@ -20,12 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Entities\Bullet.cpp" />
-    <ClCompile Include="src\Entities\Enemy.cpp" />
     <ClCompile Include="src\Entities\Player.cpp" />
     <ClCompile Include="src\getExePath.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Playfield.cpp" />
-    <ClCompile Include="src\Systems\EnemyAI\Kamikaze.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BloomFramework\BloomFramework\BloomFramework.vcxproj">
@@ -38,7 +36,6 @@
   <ItemGroup>
     <ClInclude Include="include\Components\Damage.h" />
     <ClInclude Include="include\Components\Destroyed.h" />
-    <ClInclude Include="include\Components\Enemy.h" />
     <ClInclude Include="include\Components\Health.h" />
     <ClInclude Include="include\Components\Hitbox.h" />
     <ClInclude Include="include\Components\MoveFactor.h" />
@@ -50,19 +47,19 @@
     <ClInclude Include="include\Components\Vector2D.h" />
     <ClInclude Include="include\Entities\Bullet.h" />
     <ClInclude Include="include\Entities\Callbacks\Hitbox\BulletCallback.h" />
-    <ClInclude Include="include\Entities\Enemy.h" />
     <ClInclude Include="include\Entities\Player.h" />
     <ClInclude Include="include\getExePath.h" />
     <ClInclude Include="include\Playfield.h" />
     <ClInclude Include="include\StaticVariables.h" />
     <ClInclude Include="include\Systems\CameraMovement.h" />
     <ClInclude Include="include\Systems\CollisionSystem.h" />
-    <ClInclude Include="include\Systems\EnemyAI\Kamikaze.h" />
     <ClInclude Include="include\Systems\MovementSystem.h" />
     <ClInclude Include="include\Systems\ObjectDestroyer.h" />
     <ClInclude Include="include\Systems\PositionNormalizer.h" />
-    <ClInclude Include="include\Systems\EnemyBehavior.h" />
     <ClInclude Include="include\Systems\ScrambleRender.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\Assets\Dinosaurs\sheets\Vita\idle.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

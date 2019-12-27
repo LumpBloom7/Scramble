@@ -4,7 +4,7 @@
 #include "Components/Positionf.h"
 #include "Components/Speed.h"
 #include "Components/PlayerControl.h"
-#include "Components/Enemy.h"
+//#include "Components/Enemy.h"
 #include "Components/Destroyed.h"
 #include "Components/Hitbox.h"
 

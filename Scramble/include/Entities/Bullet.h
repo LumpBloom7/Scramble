@@ -2,7 +2,7 @@
 #include "stdIncludes.h"
 #include "GameObject.h"
 #include "StaticVariables.h"
-#include "Components/Enemy.h"
+//#include "Components/Enemy.h"
 #include "Components/Vector2D.h"
 #include "Components/Positionf.h"
 #include "Components/Hitbox.h"

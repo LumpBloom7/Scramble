@@ -28,7 +28,7 @@ void Playfield::handleInput(double deltaTime) {
 				vector.x /= length;
 				vector.y /= length;
 			}
-			if (playerComp.focused) {
+			/*if (playerComp.focused) {
 				if (!playerComp.wasFocused) {
 					sprite = bloom::graphics::Sprite(m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "PlayerSpriteFocused.png"));
 					playerComp.wasFocused = true;
@@ -43,7 +43,7 @@ void Playfield::handleInput(double deltaTime) {
 				}
 				speed.xValue = 600;
 				speed.yValue = 600;
-			}
+			}*/
 
 			if (input.mouse.isPressed(MouseButton::MOUSE_LEFT) && m_dt <= 0.0) {
 				Positionf spawn{ position.x + size.w / 2, position.y + size.h / 2 };
@@ -56,12 +56,13 @@ void Playfield::handleInput(double deltaTime) {
 }
 
 void Playfield::update(double deltaTime) {
-	systems::enemyBehaviorSystem(m_registry, deltaTime);
+	//systems::enemyBehaviorSystem(m_registry, deltaTime);
 	systems::movementSystem(m_registry, deltaTime);
 	systems::collisionSystem(m_registry, deltaTime);
 	systems::objectDestroyerSystem(m_registry);
 	systems::positionNormalizerSystem(m_registry);
 	systems::cameraMovementSystem(m_registry);
+	animSys.update(deltaTime);
 }
 
 void Playfield::draw() {

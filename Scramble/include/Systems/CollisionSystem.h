@@ -3,7 +3,7 @@
 #include "Components/Size.h"
 #include "Components/Position.h"
 #include "Components/PlayerControl.h"
-#include "Components/Enemy.h"
+//#include "Components/Enemy.h"
 #include "Components/Destroyed.h"
 
 namespace systems {

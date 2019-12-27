@@ -7,6 +7,7 @@
 #include "Components/Positionf.h"
 #include "Components/Hitbox.h"
 #include "Components/Speed.h"
+#include "Components/AnimationSet.h"
 
 namespace gameObjects {
 	using namespace bloom::components;
