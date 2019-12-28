@@ -8,17 +8,17 @@ void Playfield::handleInput(double deltaTime) {
 	auto input = m_gameInstance->input;
 	m_dt -= deltaTime;
 	auto& camera = m_registry.ctx<Camera>();
-	m_registry.group<>(entt::get<PlayerControl, Vector2D, bloom::components::Size, Hitbox, Positionf, bloom::graphics::Sprite, Speed>).each(
-		[&](PlayerControl& playerComp, Vector2D& vector, bloom::components::Size& size, Hitbox& hitbox, Positionf& position, bloom::graphics::Sprite& sprite, Speed& speed) {
+	m_registry.group<>(entt::get<PlayerControl, Vector2D, bloom::components::Size, Hitbox, Positionf, Speed>).each(
+		[&](PlayerControl& playerComp, Vector2D& vector, bloom::components::Size& size, Hitbox& hitbox, Positionf& position, Speed& speed) {
 			vector = Vector2D();
 			if (input.keyboard.isPressed(KeyboardKey::KEY_UP))
 				vector.y -= 1;
 			if (input.keyboard.isPressed(KeyboardKey::KEY_DOWN))
 				vector.y += 1;
 			if (input.keyboard.isPressed(KeyboardKey::KEY_LEFT))
-				vector.x -= 1;
+				vector.x -= 1, playerComp.hDirection = -1;
 			if (input.keyboard.isPressed(KeyboardKey::KEY_RIGHT))
-				vector.x += 1;
+				vector.x += 1, playerComp.hDirection = 1;
 			if (input.keyboard.isPressed(KeyboardKey::KEY_LEFT_SHIFT))
 				playerComp.focused = true;
 			else playerComp.focused = false;
@@ -62,11 +62,12 @@ void Playfield::update(double deltaTime) {
 	systems::objectDestroyerSystem(m_registry);
 	systems::positionNormalizerSystem(m_registry);
 	systems::cameraMovementSystem(m_registry);
+	systems::animationChangerSystem(m_registry);
 	animSys.update(deltaTime);
 }
 
 void Playfield::draw() {
-	systems::scrambleRenderSystem(m_registry);
+	systems::scrambleRenderSystem(m_gameInstance,m_registry,tilemap);
 	auto input = m_gameInstance->input;
 	m_gameInstance->textures.load(ASSETSDIR / "Assets" / "Sprites" / "Crosshair32.png")->render(std::nullopt, { input.mouse.getX() - 16, input.mouse.getY() - 16, 32, 32 });
 

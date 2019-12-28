@@ -16,5 +16,7 @@ struct PlayerControl {
 	bool focused = false;
 	bool wasFocused = false;
 
+	int hDirection = 1;
+
 	std::bitset<10> perks;
 };
