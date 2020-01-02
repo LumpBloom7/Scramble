@@ -57,11 +57,11 @@ void Playfield::handleInput(double deltaTime) {
 
 void Playfield::update(double deltaTime) {
 	//systems::enemyBehaviorSystem(m_registry, deltaTime);
-	systems::movementSystem(m_registry, deltaTime);
+	systems::movementSystem(m_registry, tilemap, deltaTime);
 	systems::collisionSystem(m_registry, deltaTime);
 	systems::objectDestroyerSystem(m_registry);
 	systems::positionNormalizerSystem(m_registry);
-	systems::cameraMovementSystem(m_registry);
+	//systems::cameraMovementSystem(m_registry);
 	systems::animationChangerSystem(m_registry);
 	animSys.update(deltaTime);
 }

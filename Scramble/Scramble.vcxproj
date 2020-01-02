@@ -65,6 +65,9 @@
   <ItemGroup>
     <Image Include="data\Assets\Dinosaurs\sheets\Vita\idle.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\Assets\Level1\Tilemap.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{0D0C8230-CDF8-4C81-A980-AD2715434964}</ProjectGuid>

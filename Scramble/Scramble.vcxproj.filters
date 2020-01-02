@@ -122,4 +122,7 @@
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\Assets\Level1\Tilemap.txt" />
+  </ItemGroup>
 </Project>
