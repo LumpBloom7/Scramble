@@ -3,6 +3,7 @@
 #include "Components/Components.h"
 #include "Level/Level.h"
 #include "Game.h"
+#include "Components/PlayerControl.h"
 
 namespace systems {
 	static void scrambleRenderSystem(bloom::Game*& gameInstance, entt::registry& registry, Tilemap& tilemap, double deltaTime = 0.0) {
@@ -20,23 +21,25 @@ namespace systems {
 					int tileSheetX = tile - tileSheetY * tilemap.tileset.columns;
 					spritesheet->render(
 						SDL_Rect{ tileSheetX * tilemap.tileset.tileWidth, tileSheetY * tilemap.tileset.tileHeight,tilemap.tileset.tileWidth,tilemap.tileset.tileHeight },
-						SDL_Rect{ xCount * tilemap.tileWidth*3,yCount * tilemap.tileHeight*3, tilemap.tileWidth*3, tilemap.tileHeight*3 });
+						SDL_Rect{ xCount * tilemap.tileWidth,yCount * tilemap.tileHeight, tilemap.tileWidth, tilemap.tileHeight });
 				}
 				++xCount;
 				if (xCount == tilemap.width) xCount = 0, ++yCount;
 			}
 			if (layer.name == "Foreground") {
 				registry.group<>(entt::get<Position, Size, Sprite>).each(
-					[&](auto, Position& position, Size& size, Sprite& sprite) {
+					[&](auto entity, Position& position, Size& size, Sprite& sprite) {
 						if (position.x + size.w > camera.xOffset
 							&& position.y + size.h > camera.yOffset
 							&& position.x < camera.xOffset + camera.width
-							&& position.y < camera.yOffset + camera.height)
-							sprite.texture->render(sprite.srcRect, SDL_Rect{ position.x - camera.xOffset, position.y - camera.yOffset, size.w, size.h });
+							&& position.y < camera.yOffset + camera.height) {
+							int hDirection = 1;
+							if (registry.has<PlayerControl>(entity)) hDirection = registry.get<PlayerControl>(entity).hDirection;
+							sprite.texture->render(sprite.srcRect, SDL_Rect{ position.x - camera.xOffset, position.y - camera.yOffset, size.w, size.h }, hDirection == -1 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+						}
 					}
 				);
 			}
-			//return;
 		}
 	}
 }

@@ -21,11 +21,6 @@ namespace systems {
 				else
 					animName = "idle";
 
-				if (player.hDirection == -1)
-					animName += "Left";
-				else if (player.hDirection == 1)
-					animName += "Right";
-
 				animSet.changeCurrent(animName);
 			}
 		);
